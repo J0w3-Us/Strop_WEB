@@ -1,0 +1,18 @@
+/*
+  _styles.css
+  Archivo: reservado para definir el fondo/tema de página.
+  - Define colores base y fondo del sitio
+  - No debe contener utilidades o componentes globales
+*/
+
+/* Aseguramos que html/body ocupen toda la altura y aplicamos el fondo */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Fondo principal del sitio usando variables de color */
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+}

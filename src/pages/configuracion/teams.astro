@@ -1,0 +1,116 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Sidebar from "../../components/dashbord/Sidebar.astro";
+import Topbar from "../../components/dashbord/Topbar.astro";
+import "../../styles/dashbord.css";
+
+const teams = [
+  {
+    id: 1,
+    nombre: "Equipo Norte",
+    miembros: 12,
+    proyecto: "Residencial del Valle",
+  },
+  {
+    id: 2,
+    nombre: "Equipo Sur",
+    miembros: 8,
+    proyecto: "Centro Comercial Norte",
+  },
+  {
+    id: 3,
+    nombre: "Equipo Central",
+    miembros: 15,
+    proyecto: "Viaducto Metropolitano",
+  },
+];
+---
+
+<Layout title="Teams - Configuración">
+  <div class="dashboard-layout">
+    <Sidebar />
+
+    <div class="main-content">
+      <Topbar />
+
+      <div class="content-area">
+        <div class="proyectos-container perfil-container">
+          <div class="proyectos-header">
+            <div style="flex:1">
+              <h1 class="page-title">Teams</h1>
+            </div>
+            <button class="btn-create-project">+ Crear Equipo</button>
+          </div>
+
+          <div class="perfil-grid">
+            <aside class="perfil-tabs">
+              <nav>
+                <a href="/configuracion" class="status-tab">Profile</a>
+                <a href="/configuracion/teams" class="status-tab active"
+                  >Teams</a
+                >
+                <a href="/configuracion/reset-password" class="status-tab"
+                  >Reset password</a
+                >
+                <a href="/configuracion/sign-as-user" class="status-tab"
+                  >Sign As User</a
+                >
+                <a href="/configuracion/notification" class="status-tab"
+                  >Notification</a
+                >
+                <a href="/configuracion/billing" class="status-tab">Billing</a>
+                <a href="/configuracion/block-access" class="status-tab"
+                  >Block Access</a
+                >
+                <a href="/configuracion/delete-account" class="status-tab"
+                  >Delete Account</a
+                >
+              </nav>
+            </aside>
+
+            <section class="perfil-main">
+              <div class="sidebar-card">
+                <h3 style="margin:0 0 16px;">Mis Equipos</h3>
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                  {
+                    teams.map((team) => (
+                      <div
+                        class="project-row"
+                        style="padding:16px; border:1px solid var(--color-border); border-radius:8px;"
+                      >
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                          <div>
+                            <h4 style="margin:0; font-size:1rem;">
+                              {team.nombre}
+                            </h4>
+                            <p style="margin:4px 0 0; color:var(--color-text-secondary); font-size:0.85rem;">
+                              {team.miembros} miembros • {team.proyecto}
+                            </p>
+                          </div>
+                          <button class="btn-action">Ver Detalles</button>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentPath = window.location.pathname;
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach((item) => {
+        item.classList.remove("active");
+        const href = item.getAttribute("href");
+        if (href && (currentPath === href || currentPath.startsWith(href)))
+          item.classList.add("active");
+      });
+    });
+  </script>
+</Layout>

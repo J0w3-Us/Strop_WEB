@@ -1,0 +1,34 @@
+---
+// Esta es la página estática que se sirve en /login
+import AuthLayout from "../../layouts/Layout.astro";
+import LoginForm from "../../components/loginform.astro";
+import "../../styles/login.css";
+---
+
+<AuthLayout title="Iniciar Sesión - Strop">
+  <div class="auth-page">
+    <div class="auth-card">
+      <section class="auth-left">
+        <div class="brand">Strop</div>
+        <div>
+          <h3 class="marketing">
+            Gestiona tu Obra. Conecta tu Equipo. Desde Cualquier Lugar.
+          </h3>
+          <p class="lead">
+            Simplificamos la administración y comunicación de proyectos de
+            construcción para equipos eficientes.
+          </p>
+        </div>
+      </section>
+
+      <section class="auth-right">
+        <h2>Bienvenido de Nuevo!</h2>
+        <p class="sub">
+          Ingresa tus credenciales para acceder al Puesto de Mando.
+        </p>
+
+        <LoginForm />
+      </section>
+    </div>
+  </div>
+</AuthLayout>

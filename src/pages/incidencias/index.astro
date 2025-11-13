@@ -1,0 +1,370 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Topbar from "../../components/dashbord/Topbar.astro";
+import Sidebar from "../../components/dashbord/Sidebar.astro";
+import "../../styles/dashbord.css";
+
+// Datos de ejemplo de incidencias
+const incidencias = [
+  {
+    id: 1,
+    titulo: "Fuga de agua en tubería principal",
+    descripcion: "Sótano - 2 presenta inundación por ruptura.",
+    prioridad: "Crítica",
+    prioridadColor: "danger",
+    asignadoA: {
+      nombre: "Carlos Ruiz",
+      avatar: "CR",
+      avatarColor: "#0A58A3",
+    },
+    reportadoPor: {
+      nombre: "Javier Peña",
+      avatar: "JP",
+      avatarColor: "#10b981",
+    },
+    proyecto: "Torre Corporativa Alfa",
+    fecha: "01/08/2024",
+    estado: "abierta",
+  },
+  {
+    id: 2,
+    titulo: "Retraso en entrega de cemento",
+    descripcion: "El proveedor no cumplió con la fecha pactada.",
+    prioridad: "No Crítica",
+    prioridadColor: "info",
+    asignadoA: {
+      nombre: "Miguel Torres",
+      avatar: "MT",
+      avatarColor: "#f59e0b",
+    },
+    reportadoPor: {
+      nombre: "Luisa Morales",
+      avatar: "LM",
+      avatarColor: "#6366f1",
+    },
+    proyecto: "Residencial del Valle",
+    fecha: "30/07/2024",
+    estado: "abierta",
+  },
+  {
+    id: 3,
+    titulo: "Falta de equipo de seguridad (cascos)",
+    descripcion: "Se detectaron 3 obreros sin casco en el área sur.",
+    prioridad: "Crítica",
+    prioridadColor: "danger",
+    asignadoA: {
+      nombre: "Ana Ramírez",
+      avatar: "AR",
+      avatarColor: "#10b981",
+    },
+    reportadoPor: {
+      nombre: "Javier Peña",
+      avatar: "JP",
+      avatarColor: "#10b981",
+    },
+    proyecto: "Torre Corporativa Alfa",
+    fecha: "29/07/2024",
+    estado: "asignada",
+  },
+  {
+    id: 4,
+    titulo: "Aprobación de planos estructurales",
+    descripcion: "Planos de la fase 3 completados y enviados.",
+    prioridad: "No Crítica",
+    prioridadColor: "info",
+    asignadoA: {
+      nombre: "Carlos Ruiz",
+      avatar: "CR",
+      avatarColor: "#0A58A3",
+    },
+    reportadoPor: {
+      nombre: "Luisa Morales",
+      avatar: "LM",
+      avatarColor: "#6366f1",
+    },
+    proyecto: "Residencial del Valle",
+    fecha: "25/07/2024",
+    estado: "cerrada",
+  },
+];
+
+const filtros = {
+  proyectos: [
+    "Todos los Proyectos",
+    "Torre Corporativa Alfa",
+    "Residencial del Valle",
+    "Centro Comercial Norte",
+    "Viaducto Metropolitano",
+  ],
+//   estados: ["Ver Todo", "Todas", "Abiertas", "Asignadas", "Cerradas"],
+};
+
+const estadosTab = ["Todas", "Abiertas", "Asignadas", "Cerradas"];
+---
+
+<Layout title="Gestor de Incidencias - Strop">
+  <div class="dashboard-layout">
+    <Sidebar />
+
+    <div class="main-content">
+      <Topbar />
+
+      <div class="content-area">
+        <div class="incidencias-container">
+          <!-- Header -->
+          <div class="incidencias-header">
+            <h1 class="page-title">Gestor de Incidencias</h1>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+              <div class="search-box">
+                <svg
+                  class="search-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="M21 21l-4.35-4.35"></path>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Buscar por título, ID o palabra clave..."
+                  class="search-input"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters and Tabs -->
+          <div class="filters-section">
+            <div class="filters-left">
+              <!-- Project Filter -->
+              <div class="filter-group">
+                <select class="filter-select">
+                  <option>Todos los Proyectos</option>
+                  {
+                    filtros.proyectos
+                      .slice(1)
+                      .map((proyecto) => <option>{proyecto}</option>)
+                  }
+                </select>
+              </div>
+
+              <!-- Status Filter -->
+              <!-- <div class="filter-group">
+                <select class="filter-select">
+                  <option>Ver Todo</option>
+                   {
+                    filtros.estados
+                      .slice(1)
+                      .map((estado) => <option>{estado}</option>)
+                  } 
+                </select>
+              </div> -->
+            </div>
+
+            <!-- Status Tabs -->
+            <!-- <div class="status-tabs">
+              {
+                estadosTab.map((estado, index) => (
+                  <button
+                    class={`status-tab ${index === 0 ? "active" : ""}`}
+                    data-status={estado.toLowerCase()}
+                  >
+                    {estado}
+                  </button>
+                ))
+              }
+            </div> -->
+          </div>
+
+          <!-- Incidents Table -->
+          <div class="incidents-table-container">
+            <table class="incidents-table">
+              <thead>
+                <tr>
+                  <th class="col-titulo">TÍTULO</th>
+                  <th class="col-prioridad">PRIORIDAD</th>
+                  <th class="col-asignado">ASIGNADO A</th>
+                  <th class="col-reporto">REPORTÓ</th>
+                  <th class="col-proyecto">PROYECTO</th>
+                  <th class="col-fecha">FECHA</th>
+                  <th class="col-acciones"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  incidencias.map((incidencia) => (
+                    <tr class="incident-row" data-estado={incidencia.estado}>
+                      <td class="col-titulo">
+                        <div class="incident-info">
+                          <h4 class="incident-title">{incidencia.titulo}</h4>
+                          <p class="incident-description">
+                            {incidencia.descripcion}
+                          </p>
+                        </div>
+                      </td>
+
+                      <td class="col-prioridad">
+                        <span
+                          class={`priority-badge priority-${incidencia.prioridadColor}`}
+                        >
+                          {incidencia.prioridad}
+                        </span>
+                      </td>
+
+                      <td class="col-asignado">
+                        <div class="user-info">
+                          <div
+                            class="user-avatar"
+                            style={`background-color: ${incidencia.asignadoA.avatarColor}; color: white;`}
+                          >
+                            {incidencia.asignadoA.avatar}
+                          </div>
+                          <span class="user-name">
+                            {incidencia.asignadoA.nombre}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="col-reporto">
+                        <div class="user-info">
+                          <div
+                            class="user-avatar"
+                            style={`background-color: ${incidencia.reportadoPor.avatarColor}; color: white;`}
+                          >
+                            {incidencia.reportadoPor.avatar}
+                          </div>
+                          <span class="user-name">
+                            {incidencia.reportadoPor.nombre}
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="col-proyecto">
+                        <span class="project-name">{incidencia.proyecto}</span>
+                      </td>
+
+                      <td class="col-fecha">
+                        <span class="incident-date">{incidencia.fecha}</span>
+                      </td>
+
+                      <td class="col-acciones">
+                        <button class="action-btn" title="Más opciones">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                          >
+                            <circle cx="12" cy="12" r="2" />
+                            <circle cx="12" cy="5" r="2" />
+                            <circle cx="12" cy="19" r="2" />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination-container">
+            <div class="pagination-info">
+              <span>Mostrando <strong>1-4</strong> de <strong>100</strong></span
+              >
+            </div>
+
+            <div class="pagination-controls">
+              <button class="pagination-btn" disabled>Anterior</button>
+              <button class="pagination-number active">1</button>
+              <button class="pagination-number">2</button>
+              <button class="pagination-number">3</button>
+              <button class="pagination-btn">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Set active navigation
+      const currentPath = window.location.pathname;
+      const navItems =
+        document.querySelectorAll<HTMLAnchorElement>(".nav-item");
+
+      navItems.forEach((item) => {
+        item.classList.remove("active");
+        const href = item.getAttribute("href");
+        if (href === currentPath) {
+          item.classList.add("active");
+        }
+      });
+
+      // Status tabs functionality
+      const statusTabs =
+        document.querySelectorAll<HTMLButtonElement>(".status-tab");
+      const incidentRows =
+        document.querySelectorAll<HTMLElement>(".incident-row");
+
+      statusTabs.forEach((tab) => {
+        tab.addEventListener("click", function (this: HTMLButtonElement) {
+          const status = (this.dataset.status || "").toLowerCase();
+
+          // Update active tab
+          statusTabs.forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          // Filter rows
+          incidentRows.forEach((row) => {
+            const rowStatus = (row.dataset && row.dataset.estado) || "";
+            if (status === "todas" || rowStatus === status) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
+      });
+
+      // Search functionality
+      const searchInput =
+        document.querySelector<HTMLInputElement>(".search-input");
+
+      if (searchInput) {
+        searchInput.addEventListener(
+          "input",
+          function (this: HTMLInputElement) {
+            const searchTerm = (this.value || "").toLowerCase();
+
+            incidentRows.forEach((row) => {
+              const titleEl = row.querySelector<HTMLElement>(".incident-title");
+              const descEl = row.querySelector<HTMLElement>(
+                ".incident-description"
+              );
+              const title = (titleEl?.textContent || "").toLowerCase();
+              const description = (descEl?.textContent || "").toLowerCase();
+
+              if (
+                (title && title.includes(searchTerm)) ||
+                (description && description.includes(searchTerm))
+              ) {
+                row.style.display = "";
+              } else {
+                row.style.display = "none";
+              }
+            });
+          }
+        );
+      }
+    });
+  </script>
+</Layout>

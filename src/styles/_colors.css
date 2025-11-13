@@ -1,0 +1,28 @@
+/* ========================================
+   PALETA DE COLORES
+   Define todos los colores del sistema
+   ======================================== */
+
+:root {
+  /* 1. Paleta de Marca */
+  --color-primary: #0A58A3;           /* Azul corporativo principal */
+  --color-primary-light: #e6f0f9;     /* Azul claro para fondos */
+  --color-secondary: #FF6B00;         /* Naranja/ámbar para acentos */
+
+  /* 2. Paleta Semántica (Semáforo de Estados) */
+  --color-danger: #ef4444;            /* Rojo para crítico/seguridad */
+  --color-warning: #f59e0b;           /* Amarillo para problemas/solicitudes */
+  --color-success: #10b981;           /* Verde para progreso/consulta */
+  --color-info: #1976D2;              /* Azul informativo */
+
+  /* 3. Paleta Neutral */
+  --color-text: #202124;              /* Texto principal */
+  --color-text-secondary: #5f6368;    /* Texto secundario */
+  --color-border: #DADCE0;            /* Bordes suaves */
+  --color-bg-light: #F8F9FA;          /* Fondo de página */
+  --color-bg-white: #FFFFFF;          /* Fondo de tarjetas */
+
+  /* Colores adicionales para estado hover/active */
+  --color-hover: #f1f5f9;
+  --color-active: #eff6ff;
+}

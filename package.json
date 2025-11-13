@@ -9,6 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.5"
+    "astro": "^5.15.5",
+    "nanostores": "^1.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17"
   }
 }

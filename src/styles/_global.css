@@ -1,0 +1,42 @@
+/* ========================================
+   ESTILOS GLOBALES BASE
+   Configuración base de Tailwind y estilos compartidos
+   ======================================== */
+
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset y estilos base */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Estilos compartidos entre todas las páginas */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Utilidad para cards genéricos */
+.card {
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}

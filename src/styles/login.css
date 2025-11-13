@@ -1,0 +1,209 @@
+/* ========================================
+   LOGIN & AUTH STYLES
+   Estilos para páginas de login y registro
+   ======================================== */
+
+/* Auth Page Layout */
+.auth-page {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--color-bg-light);
+}
+
+.auth-card {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  background: var(--color-bg-white);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  display: flex;
+}
+
+/* Auth Left Panel */
+.auth-left {
+  flex: 0 0 62%;
+  min-width: 360px;
+  background: linear-gradient(180deg, var(--color-primary) 0%, #0b3350 100%);
+  color: white;
+  padding: 3.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.auth-left .brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.auth-left .marketing {
+  font-size: 78px;
+  line-height: 1.02;
+  font-weight: 800;
+  margin-top: auto;
+}
+
+.auth-left p.lead {
+  opacity: 0.85;
+  margin-top: 1rem;
+  max-width: 420px;
+}
+
+.auth-left:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 10%, transparent 11%), 
+    linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.02) 75%, rgba(255,255,255,0.02) 100%);
+  background-size: 260px 260px, 130px 130px;
+  pointer-events: none;
+}
+
+/* Auth Right Panel */
+.auth-right {
+  flex: 0 0 38%;
+  min-width: 320px;
+  background: var(--color-bg-white);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-right h2 {
+  font-size: 1.75rem;
+  margin: 0 0 6px;
+  color: var(--color-text);
+}
+
+.auth-right p.sub {
+  color: var(--color-text-secondary);
+  margin: 0 0 18px;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-white);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  color: var(--color-text);
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+  color: var(--color-text-secondary);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  width: 100%;
+  background: var(--color-primary);
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  border: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-white);
+  font-size: 1rem;
+  width: 100%;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--color-text);
+}
+
+.btn-google:hover {
+  background: var(--color-bg-light);
+}
+
+/* Helper Row */
+.helper-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 20px;
+}
+
+.helper-row a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.helper-row a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 820px) {
+  .auth-page {
+    padding: 2rem;
+  }
+  
+  .auth-card {
+    flex-direction: column;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .auth-right {
+    width: 100%;
+    padding: 28px;
+  }
+  
+  .auth-left {
+    display: none;
+  }
+}
