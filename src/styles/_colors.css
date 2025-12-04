@@ -1,28 +1,98 @@
 /* ========================================
-   PALETA DE COLORES
-   Define todos los colores del sistema
+   PALETA DE COLORES - SINCRONIZADA CON APP MÓVIL
+   Coincide hexadecimalmente con AppColors.dart
    ======================================== */
 
 :root {
-  /* 1. Paleta de Marca */
-  --color-primary: #0A58A3;           /* Azul corporativo principal */
-  --color-primary-light: #e6f0f9;     /* Azul claro para fondos */
-  --color-secondary: #FF6B00;         /* Naranja/ámbar para acentos */
+  /* --- PALETA BASE (Coincide con AppTheme) --- */
+  --color-primary: #0A58A3;
+  --color-secondary: #FF6B00;
+  
+  /* --- TIPOS DE INCIDENCIA (Vital para la Bitácora) --- */
+  /* AppColors.progressReportColor (Blue) */
+  --type-progress: #2196F3;
+  /* AppColors.problemColor (Orange) */
+  --type-problem: #FF9800;
+  /* AppColors.consultationColor (Purple) */
+  --type-consultation: #9C27B0;
+  /* AppColors.safetyIncidentColor (Red) */
+  --type-safety: #D32F2F; /* Error color dark */
+  /* AppColors.materialRequestColor (Teal) */
+  --type-material: #009688;
 
-  /* 2. Paleta Semántica (Semáforo de Estados) */
-  --color-danger: #ef4444;            /* Rojo para crítico/seguridad */
-  --color-warning: #f59e0b;           /* Amarillo para problemas/solicitudes */
-  --color-success: #10b981;           /* Verde para progreso/consulta */
-  --color-info: #1976D2;              /* Azul informativo */
-
-  /* 3. Paleta Neutral */
-  --color-text: #202124;              /* Texto principal */
-  --color-text-secondary: #5f6368;    /* Texto secundario */
-  --color-border: #DADCE0;            /* Bordes suaves */
-  --color-bg-light: #F8F9FA;          /* Fondo de página */
-  --color-bg-white: #FFFFFF;          /* Fondo de tarjetas */
-
-  /* Colores adicionales para estado hover/active */
+  /* --- ESTADOS DE APROBACIÓN --- */
+  --status-approved: #4CAF50; /* Green */
+  --status-rejected: #F44336; /* Red */
+  --status-pending: #FF9800;  /* Orange */
+  
+  /* --- ROLES DE USUARIO (Para Badges) --- */
+  --role-superintendent: #9C27B0;
+  --role-resident: #0A58A3;
+  --role-cabo: #FF9800;
+  
+  /* --- UI GENÉRICA --- */
+  --bg-light: #F5F5F5;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --border-color: #E0E0E0;
+  
+  /* --- COMPATIBILIDAD CON ESTILOS EXISTENTES --- */
+  --color-primary-light: #e6f0f9;
+  --color-danger: var(--type-safety);
+  --color-warning: var(--type-problem);
+  --color-success: var(--status-approved);
+  --color-info: var(--type-progress);
+  --color-text: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border-color);
+  --color-bg-light: var(--bg-light);
+  --color-bg-white: #FFFFFF;
   --color-hover: #f1f5f9;
   --color-active: #eff6ff;
+}
+
+/* Clases de utilidad para badges rápidos */
+.badge-material { 
+  background-color: rgba(0, 150, 136, 0.1); 
+  color: var(--type-material); 
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-safety { 
+  background-color: rgba(211, 47, 47, 0.1); 
+  color: var(--type-safety); 
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-progress { 
+  background-color: rgba(33, 150, 243, 0.1); 
+  color: var(--type-progress); 
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-problem {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: var(--type-problem);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-consultation {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: var(--type-consultation);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
 }

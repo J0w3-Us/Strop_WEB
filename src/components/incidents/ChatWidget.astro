@@ -1,0 +1,148 @@
+---
+interface Props { 
+  incidentId: string; 
+}
+const { incidentId } = Astro.props;
+---
+
+<div class="chat-container bg-gray-50 rounded-lg border p-4">
+  <h4 class="font-bold mb-4 text-sm text-gray-700">Comentarios / Chat de Obra</h4>
+  
+  <div id={`chat-history-${incidentId}`} class="h-64 overflow-y-auto space-y-3 mb-4 p-2 bg-white rounded border">
+    <div class="text-center text-gray-400 text-sm mt-10">Cargando conversación...</div>
+  </div>
+
+  <form class="flex gap-2" onsubmit={`enviarComentario(event, '${incidentId}')`}>
+    <input 
+      type="text" 
+      name="msg" 
+      class="flex-1 border rounded px-3 py-2 text-sm" 
+      placeholder="Escribe una respuesta al sitio..." 
+      required 
+    />
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+      Enviar
+    </button>
+  </form>
+</div>
+
+<script define:vars={{ incidentId }}>
+  // Lazy Loading: Carga diferida de comentarios al scroll
+  const chatHistory = document.getElementById(`chat-history-${incidentId}`);
+  
+  async function cargarComentarios() {
+    try {
+      // TODO: Reemplazar con fetch real a API
+      // const response = await fetch(`/api/comments?incidentId=${incidentId}`);
+      // const comments = await response.json();
+      
+      // Mock data temporal (simula respuesta del backend móvil)
+      const mockComments = [
+        {
+          id: '1',
+          authorName: 'Juan Pérez',
+          content: 'Material solicitado y aprobado',
+          createdAt: new Date().toISOString(),
+          isSystemMessage: false
+        },
+        {
+          id: '2',
+          authorName: 'Sistema',
+          content: 'Solicitud marcada como urgente',
+          createdAt: new Date().toISOString(),
+          isSystemMessage: true
+        }
+      ];
+      
+      if (chatHistory) {
+        chatHistory.innerHTML = mockComments.map(comment => `
+          <div class="${comment.isSystemMessage ? 'bg-yellow-50 border-l-4 border-yellow-400' : 'bg-gray-100'} p-3 rounded">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-semibold text-sm ${comment.isSystemMessage ? 'text-yellow-700' : 'text-gray-800'}">
+                ${comment.authorName}
+              </span>
+              <span class="text-xs text-gray-500">
+                ${new Date(comment.createdAt).toLocaleTimeString()}
+              </span>
+            </div>
+            <p class="text-sm text-gray-700">${comment.content}</p>
+          </div>
+        `).join('');
+      }
+    } catch (error) {
+      console.error('Error cargando comentarios:', error);
+      if (chatHistory) {
+        chatHistory.innerHTML = '<div class="text-center text-red-500 text-sm">Error al cargar mensajes</div>';
+      }
+    }
+  }
+  
+  // Auto-carga al renderizar
+  window.addEventListener('DOMContentLoaded', cargarComentarios);
+  
+  // Handler para enviar nuevo comentario
+  window.enviarComentario = async function(event, incId) {
+    event.preventDefault();
+    const form = event.target;
+    const msgInput = form.querySelector('input[name="msg"]');
+    const mensaje = msgInput.value.trim();
+    
+    if (!mensaje) return;
+    
+    try {
+      // TODO: POST real al backend
+      // await fetch('/api/comments', {
+      //   method: 'POST',
+      //   body: JSON.stringify({ incidentId: incId, content: mensaje })
+      // });
+      
+      console.log('Enviando comentario:', { incidentId: incId, content: mensaje });
+      
+      // Simular agregar mensaje a la UI
+      const newMessage = `
+        <div class="bg-blue-50 p-3 rounded border-l-4 border-blue-500">
+          <div class="flex justify-between items-start mb-1">
+            <span class="font-semibold text-sm text-blue-800">Tú</span>
+            <span class="text-xs text-gray-500">${new Date().toLocaleTimeString()}</span>
+          </div>
+          <p class="text-sm text-gray-700">${mensaje}</p>
+        </div>
+      `;
+      
+      if (chatHistory) {
+        chatHistory.innerHTML += newMessage;
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+      
+      msgInput.value = '';
+    } catch (error) {
+      console.error('Error enviando comentario:', error);
+      alert('Error al enviar el mensaje');
+    }
+  };
+</script>
+
+<style>
+  .chat-container {
+    max-width: 100%;
+    min-height: 400px;
+  }
+  
+  #chat-history-${incidentId}::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #chat-history-${incidentId}::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  #chat-history-${incidentId}::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  #chat-history-${incidentId}::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+</style>

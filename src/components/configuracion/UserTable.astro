@@ -1,0 +1,294 @@
+---
+
+---
+
+<div class="users-panel" id="users-panel">
+  <div
+    style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"
+  >
+    <div style="display:flex;gap:12px;align-items:center;">
+      <input id="ut-search" placeholder="Buscar por nombre o correo..." />
+      <select id="ut-role">
+        <option value="">Todos los roles</option>
+        <option value="admin">Administrador</option>
+        <option value="worker">Trabajador</option>
+      </select>
+    </div>
+    <div>
+      <button id="ut-add" class="btn btn-primary">+ Añadir Usuario</button>
+    </div>
+  </div>
+
+  <div id="ut-mount">
+    <!-- table, skeleton, error, empty states rendered by client script -->
+  </div>
+</div>
+
+<script type="module">
+  // client-side simple API helpers (calls relative /api/users)
+  async function getAllUsers() {
+    const res = await fetch("/api/users");
+    if (!res.ok) throw new Error("GET /users failed");
+    return await res.json();
+  }
+  async function createUser(payload) {
+    const res = await fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error("POST /users failed");
+    return await res.json();
+  }
+  async function updateUser(id, payload) {
+    const res = await fetch(`/api/users/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error("PUT /users failed");
+    return await res.json();
+  }
+  async function deleteUser(id) {
+    const res = await fetch(`/api/users/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("DELETE /users failed");
+  }
+
+  // Helper: create element from HTML
+  function el(html) {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = html.trim();
+    return wrap.firstElementChild;
+  }
+
+  const mount = document.getElementById("ut-mount");
+  const searchInput = document.getElementById("ut-search");
+  const roleSelect = document.getElementById("ut-role");
+  const addBtn = document.getElementById("ut-add");
+
+  let users = [];
+  let loading = false;
+  let error = null;
+
+  function renderSkeleton() {
+    mount.innerHTML = `
+      <table class="table"><thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+      ${[0, 1, 2, 3].map(() => `<tr>${["140", "180", "100", "120", "80", "60"].map((w) => `<td><div class="skeleton" style="width:${w}px"></div></td>`).join("")}</tr>`).join("")}
+      </tbody></table>`;
+  }
+
+  function renderError(msg) {
+    mount.innerHTML = `<div class="error-box">${msg} <button id="ut-retry" class="btn">Reintentar</button></div>`;
+    document.getElementById("ut-retry").addEventListener("click", load);
+  }
+
+  function renderEmpty() {
+    mount.innerHTML = `<div class="empty-box">No se encontraron usuarios. Haz clic en '+ Añadir Usuario' para empezar.</div>`;
+  }
+
+  function renderTable(list) {
+    mount.innerHTML = `
+      <table class="table"><thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr></thead>
+      <tbody>
+      ${list
+        .map(
+          (
+            u
+          ) => `<tr data-id="${u.id}"><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td><td>${u.phone || ""}</td><td>${u.is_active ? '<span class="status-active">Activo</span>' : '<span class="status-inactive">Inactivo</span>'}</td>
+        <td style="display:flex;gap:8px;"><button class="btn ut-edit">Editar</button><button class="btn ut-toggle">${u.is_active ? "Desactivar" : "Activar"}</button><button class="btn ut-delete">Eliminar</button></td></tr>`
+        )
+        .join("")}
+      </tbody></table>`;
+
+    // attach listeners
+    mount
+      .querySelectorAll(".ut-edit")
+      .forEach((btn) => btn.addEventListener("click", onEdit));
+    mount
+      .querySelectorAll(".ut-toggle")
+      .forEach((btn) => btn.addEventListener("click", onToggle));
+    mount
+      .querySelectorAll(".ut-delete")
+      .forEach((btn) => btn.addEventListener("click", onDelete));
+  }
+
+  function filtered() {
+    const q = (searchInput.value || "").toLowerCase().trim();
+    const role = roleSelect.value;
+    return users.filter((u) => {
+      const matchesQ =
+        !q ||
+        u.name.toLowerCase().includes(q) ||
+        (u.email || "").toLowerCase().includes(q);
+      const matchesRole = !role || u.role === role;
+      return matchesQ && matchesRole;
+    });
+  }
+
+  async function load() {
+    loading = true;
+    error = null;
+    renderSkeleton();
+    try {
+      users = await getAllUsers();
+      if (!users || users.length === 0) {
+        renderEmpty();
+        return;
+      }
+      renderTable(filtered());
+    } catch (err) {
+      console.error(err);
+      renderError("Error al cargar usuarios. Intenta de nuevo.");
+    } finally {
+      loading = false;
+    }
+  }
+
+  let modal = null;
+  function showModal(mode, data) {
+    // build modal HTML
+    const html = `
+      <div class="modal" id="ut-modal"><div class="modal-card"><h3>${mode === "create" ? "Crear Usuario" : "Editar Usuario"}</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+        <div><label>Nombre*</label><input id="ut-name" value="${data?.name || ""}" /></div>
+        <div><label>Email*</label><input id="ut-email" value="${data?.email || ""}" /></div>
+        <div><label>Teléfono</label><input id="ut-phone" value="${data?.phone || ""}" /></div>
+        <div><label>Rol</label><select id="ut-role-select"><option value="admin">Administrador</option><option value="worker">Trabajador</option></select></div>
+      </div>
+      ${mode === "create" ? `<div style="margin-top:12px;"><label>Contraseña*</label><input id="ut-password" type="password" /></div>` : ""}
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;"><button id="ut-cancel" class="btn">Cancelar</button><button id="ut-save" class="btn btn-primary">Guardar</button></div>
+      </div></div>`;
+    const wrapper = el(html);
+    document.body.appendChild(wrapper);
+    // set role select safely
+    const roleSel = document.getElementById("ut-role-select");
+    if (roleSel && data && data.role) {
+      try {
+        roleSel.value = data.role;
+      } catch (e) {}
+    }
+
+    function getVal(id) {
+      const el = document.getElementById(id);
+      return el && "value" in el ? el.value : "";
+    }
+
+    const cancelBtn = document.getElementById("ut-cancel");
+    const saveBtn = document.getElementById("ut-save");
+    if (cancelBtn)
+      cancelBtn.addEventListener("click", () => {
+        wrapper.remove();
+      });
+    if (saveBtn)
+      saveBtn.addEventListener("click", async () => {
+        const name = String(getVal("ut-name")).trim();
+        const email = String(getVal("ut-email")).trim();
+        const phone = String(getVal("ut-phone")).trim();
+        const role = String(getVal("ut-role-select") || "");
+        if (!name || !email) {
+          alert("Nombre y correo son obligatorios");
+          return;
+        }
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+          alert("Correo inválido");
+          return;
+        }
+        try {
+          if (mode === "create") {
+            const password = String(getVal("ut-password"));
+            const created = await createUser({
+              name,
+              email,
+              phone,
+              role,
+              is_active: true,
+              password,
+            });
+            users = [created, ...users];
+          } else if (mode === "edit" && data && data.id) {
+            const updated = await updateUser(data.id, {
+              name,
+              email,
+              phone,
+              role,
+            });
+            users = users.map((u) => (u.id === updated.id ? updated : u));
+          }
+          wrapper.remove();
+          renderTable(filtered());
+          showToast(
+            mode === "create" ? "Usuario creado" : "Usuario actualizado"
+          );
+        } catch (err) {
+          console.error(err);
+          alert(err && err.message ? err.message : "Error al guardar");
+        }
+      });
+  }
+
+  function onEdit(e) {
+    const tr = e.target.closest("tr");
+    const id = Number(tr.dataset.id);
+    const user = users.find((u) => u.id === id);
+    showModal("edit", user);
+  }
+
+  async function onToggle(e) {
+    const tr = e.target.closest("tr");
+    const id = Number(tr.dataset.id);
+    const user = users.find((u) => u.id === id);
+    if (!user) return;
+    const prev = user.is_active;
+    user.is_active = !prev;
+    renderTable(filtered());
+    try {
+      const updated = await updateUser(id, { is_active: user.is_active });
+      users = users.map((u) => (u.id === updated.id ? updated : u));
+      showToast(updated.is_active ? "Usuario activado" : "Usuario desactivado");
+    } catch (err) {
+      user.is_active = prev;
+      renderTable(filtered());
+      alert("Error al actualizar estado");
+    }
+  }
+
+  function onDelete(e) {
+    const tr = e.target.closest("tr");
+    const id = Number(tr.dataset.id);
+    const user = users.find((u) => u.id === id);
+    if (!user) return;
+    const ok = confirm(
+      `¿Estás seguro de que quieres eliminar a ${user.name}? Esta acción no se puede deshacer.`
+    );
+    if (!ok) return;
+    deleteUser(id)
+      .then(() => {
+        users = users.filter((u) => u.id !== id);
+        renderTable(filtered());
+        showToast("Usuario eliminado");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error al eliminar usuario");
+      });
+  }
+
+  function showToast(msg) {
+    let t = document.createElement("div");
+    t.className = "toast";
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+  }
+
+  searchInput.addEventListener("input", () => {
+    if (!loading) renderTable(filtered());
+  });
+  roleSelect.addEventListener("change", () => {
+    if (!loading) renderTable(filtered());
+  });
+  addBtn.addEventListener("click", () => showModal("create", null));
+
+  // initial load
+  load();
+</script>

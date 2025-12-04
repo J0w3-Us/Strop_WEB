@@ -1,0 +1,383 @@
+---
+import type { Comment } from "../../types/index";
+
+interface Props {
+  incidentId: string;
+  incidentTitle?: string;
+}
+
+const { incidentId, incidentTitle = "Incidencia" } = Astro.props;
+---
+
+<div class="comments-widget" data-incident-id={incidentId}>
+  <!-- Loading spinner -->
+  <div class="comments-loader" id="commentsLoader">
+    <div class="spinner"></div>
+    <p>Cargando comentarios...</p>
+  </div>
+
+  <!-- Comments container (initially hidden) -->
+  <div class="comments-container" id="commentsContainer" style="display: none;">
+    <!-- Chat messages will be injected here -->
+    <div class="messages-list" id="messagesList"></div>
+
+    <!-- Input area -->
+    <div class="comment-input-area">
+      <input
+        type="text"
+        id="commentTextInput"
+        placeholder="Escribe un comentario..."
+        class="comment-input-field"
+      />
+      <button id="sendCommentBtn" class="btn-send-comment">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .comments-widget {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .comments-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    gap: 12px;
+    color: #666;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e0e0e0;
+    border-top-color: #0a58a3;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .comments-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .messages-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fff;
+    min-height: 0;
+  }
+
+  .message {
+    display: flex;
+    gap: 8px;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .message.own {
+    flex-direction: row-reverse;
+  }
+
+  .message-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .message.other .message-bubble {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+  }
+
+  .message.own .message-bubble {
+    background: #0a58a3;
+    color: #fff;
+  }
+
+  .message-meta {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  .message.own .message-meta {
+    text-align: right;
+  }
+
+  .message.other .message-meta {
+    text-align: left;
+  }
+
+  .message-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 4px;
+  }
+
+  .message.own .message-author {
+    text-align: right;
+  }
+
+  .message.system .message-bubble {
+    background: transparent;
+    border: 1px dashed #ddd;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .comment-input-area {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+  }
+
+  .comment-input-field {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .comment-input-field:focus {
+    border-color: #0a58a3;
+  }
+
+  .btn-send-comment {
+    padding: 8px 12px;
+    background: #0a58a3;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+
+  .btn-send-comment:hover {
+    background: #084298;
+  }
+
+  .btn-send-comment:active {
+    transform: scale(0.95);
+  }
+
+  .btn-send-comment:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  import {
+    getCommentsByIncidentId,
+    postComment,
+  } from "../../service/comment.service";
+  import type { Comment } from "../../types/index";
+
+  // Esperar a que el DOM esté listo
+  document.addEventListener("DOMContentLoaded", async () => {
+    const widget = document.querySelector(".comments-widget");
+    if (!widget) return;
+
+    const incidentId = widget.getAttribute("data-incident-id");
+    if (!incidentId) return;
+
+    const loader = widget.querySelector("#commentsLoader") as HTMLElement;
+    const container = widget.querySelector("#commentsContainer") as HTMLElement;
+    const messagesList = widget.querySelector("#messagesList") as HTMLElement;
+    const inputField = widget.querySelector(
+      "#commentTextInput"
+    ) as HTMLInputElement;
+    const sendBtn = widget.querySelector(
+      "#sendCommentBtn"
+    ) as HTMLButtonElement;
+
+    // Cargar comentarios
+    try {
+      const comments = await getCommentsByIncidentId(incidentId);
+
+      // Ocultar loader y mostrar container
+      if (loader) loader.style.display = "none";
+      if (container) container.style.display = "flex";
+
+      // Renderizar comentarios existentes
+      renderComments(comments, messagesList);
+
+      // Evento de envío
+      if (sendBtn && inputField) {
+        sendBtn.addEventListener("click", async () => {
+          await handleSendComment(
+            incidentId,
+            inputField,
+            sendBtn,
+            messagesList,
+            comments
+          );
+        });
+
+        // Enter key para enviar
+        inputField.addEventListener("keydown", async (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            await handleSendComment(
+              incidentId,
+              inputField,
+              sendBtn,
+              messagesList,
+              comments
+            );
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error loading comments:", error);
+      if (loader)
+        loader.innerHTML =
+          '<p style="color: red;">Error al cargar comentarios</p>';
+    }
+  });
+
+  function renderComments(comments: Comment[], container: HTMLElement) {
+    container.innerHTML = "";
+
+    comments.forEach((comment) => {
+      const isOwn = false; // Se puede implementar comparando con usuario actual
+      const isSystem = comment.isSystemMessage || false;
+
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${isSystem ? "system" : isOwn ? "own" : "other"}`;
+
+      const authorDiv = document.createElement("div");
+      authorDiv.className = "message-author";
+      authorDiv.textContent = isSystem ? "Sistema" : comment.authorName;
+
+      const bubbleDiv = document.createElement("div");
+      bubbleDiv.className = "message-bubble";
+      bubbleDiv.textContent = comment.content;
+
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "message-meta";
+      metaDiv.textContent = formatTime(comment.createdAt);
+
+      messageDiv.appendChild(authorDiv);
+      messageDiv.appendChild(bubbleDiv);
+      messageDiv.appendChild(metaDiv);
+
+      container.appendChild(messageDiv);
+    });
+
+    // Auto-scroll al final
+    container.scrollTop = container.scrollHeight;
+  }
+
+  async function handleSendComment(
+    incidentId: string,
+    inputField: HTMLInputElement,
+    sendBtn: HTMLButtonElement,
+    messagesList: HTMLElement,
+    comments: Comment[]
+  ) {
+    const content = inputField.value.trim();
+    if (!content) return;
+
+    // Deshabilitar envío
+    sendBtn.disabled = true;
+    inputField.disabled = true;
+
+    try {
+      const newComment = await postComment(incidentId, content);
+      comments.push(newComment);
+
+      // Renderizar el nuevo comentario
+      renderComments(comments, messagesList);
+
+      // Limpiar input
+      inputField.value = "";
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      alert("Error al enviar el comentario");
+    } finally {
+      sendBtn.disabled = false;
+      inputField.disabled = false;
+      inputField.focus();
+    }
+  }
+
+  function formatTime(isoDate: string): string {
+    const date = new Date(isoDate);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+
+    if (diffMins < 1) return "Hace un momento";
+    if (diffMins < 60) return `Hace ${diffMins}m`;
+    if (diffHours < 24) return `Hace ${diffHours}h`;
+
+    return date.toLocaleDateString("es-ES", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+</script>

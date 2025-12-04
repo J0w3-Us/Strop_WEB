@@ -22,26 +22,39 @@
           />
         </div>
 
+        <div class="form-group">
+          <label for="clientName">Cliente (Razón Social) *</label>
+          <input
+            type="text"
+            id="clientName"
+            name="clientName"
+            class="form-input"
+            placeholder="Inmobiliaria X"
+            required
+          />
+        </div>
+
         <div class="form-row">
           <div class="form-group">
-            <label for="tipo">Tipo de Proyecto *</label>
-            <select id="tipo" name="tipo" class="form-select" required>
-              <option value="">Selecciona un tipo...</option>
-              <option value="Residencial">Residencial</option>
-              <option value="Comercial">Comercial</option>
-              <option value="Oficinas">Oficinas</option>
-              <option value="Infraestructura">Infraestructura</option>
-              <option value="Industrial">Industrial</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="presupuesto">Presupuesto</label>
+            <label for="address">Dirección Exacta (Calle y #) *</label>
             <input
               type="text"
-              id="presupuesto"
-              name="presupuesto"
+              id="address"
+              name="address"
               class="form-input"
-              placeholder="$1,000,000"
+              placeholder="Av. Reforma 123"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="location">Ciudad / Estado *</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              class="form-input"
+              placeholder="CDMX"
+              required
             />
           </div>
         </div>
@@ -68,20 +81,14 @@
         </div>
 
         <div class="form-group">
-          <label for="ubicacion">Ubicación</label>
-          <input
-            type="text"
-            id="ubicacion"
-            name="ubicacion"
-            class="form-input"
-            placeholder="Madrid, España"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="responsable">Responsable del Proyecto</label>
-          <select id="responsable" name="responsable" class="form-select">
-            <option value="">Selecciona un responsable...</option>
+          <label for="superintendentId">Superintendente a Cargo (Jefe)</label>
+          <select
+            id="superintendentId"
+            name="superintendentId"
+            class="form-select"
+            required
+          >
+            <option value="">Seleccione un ingeniero...</option>
             <option value="1">Carlos Rivera</option>
             <option value="2">Ana Torres</option>
             <option value="3">Luis García</option>
@@ -159,9 +166,28 @@
         e.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        console.log("Crear proyecto:", data);
-        // TODO: Enviar datos al API
-        alert(`Proyecto "${data.titulo}" creado exitosamente!`);
+
+        // Construir objeto alineado con ProjectModel del móvil
+        const payload = {
+          id: String(Date.now()),
+          name: (data as any).titulo,
+          clientName: (data as any).clientName,
+          address: (data as any).address,
+          location: (data as any).location,
+          superintendentId: (data as any).superintendentId || null,
+          startDate: (data as any).fechaInicio || null,
+          estimatedEndDate: (data as any).fechaFin || null,
+          description: (data as any).descripcion || "",
+          status: "active",
+          progress: 0,
+          teamCount: 0,
+          openIncidents: 0,
+          pendingApprovals: 0,
+        };
+
+        console.log("Crear proyecto (payload):", payload);
+        // TODO: Enviar payload al API
+        alert(`Proyecto "${payload.name}" creado exitosamente!`);
         window.closeModalProyecto("modalCrearProyecto");
         form.reset();
       });

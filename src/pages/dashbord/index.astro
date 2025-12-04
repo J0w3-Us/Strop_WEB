@@ -4,12 +4,25 @@ import DashboardLayout from "../../layouts/Layout.astro";
 import Topbar from "../../components/dashbord/Topbar.astro";
 import Sidebar from "../../components/dashbord/Sidebar.astro";
 import "../../styles/dashbord.css";
+import type { Project } from "../../types";
 
 // Datos de ejemplo (simulando lo que vendría de la API)
-// Cambia estos números para probar los estados activo/inactivo
-const criticalCount: number = 1; // Cambia a 1, 2, 3... para activar el widget
-const warningCount: number = 0; // Cambia a 0 para desactivar
-const successCount: number = 0; // Cambia a 0 para desactivar
+const currentProject: Project = {
+  id: "1",
+  name: "Residencial del Valle",
+  clientName: "Inmobiliaria Sur",
+  address: "Av. Siempre Viva 123",
+  location: "Madrid",
+  status: "active",
+  startDate: "2024-01-15T00:00:00Z",
+  estimatedEndDate: "2024-12-31T00:00:00Z",
+  progress: 0.75,
+  superintendentId: "1",
+  residentIds: ["2", "3"],
+  openIncidents: 5,
+  pendingApprovals: 2,
+  teamCount: 8,
+};
 ---
 
 <DashboardLayout title="Puesto de Mando - Strop">
@@ -30,203 +43,175 @@ const successCount: number = 0; // Cambia a 0 para desactivar
 
           <div class="project-status-card">
             <div class="status-chips">
-              <!-- Widget CRÍTICO - Cambia automáticamente según criticalCount -->
               <div
-                class={`status-chip critical ${criticalCount === 0 ? "inactive" : ""}`}
+                class={`status-chip critical ${currentProject.openIncidents > 0 ? "" : "inactive"}`}
               >
-                <span class="status-number">{criticalCount}</span>
+                <span class="status-number">{currentProject.openIncidents}</span
+                >
                 <div class="status-content">
-                  <div class="status-title">Crítico / Seguridad</div>
-                  <div class="status-desc">
-                    {
-                      criticalCount === 0
-                        ? "Sin incidencias urgentes"
-                        : "Incidencias urgentes"
-                    }
-                  </div>
+                  <div class="status-title">URGENTE</div>
+                  <div class="status-desc">Incidencias de Seguridad</div>
                 </div>
               </div>
 
-              <!-- Widget PROBLEMA - Cambia automáticamente según warningCount -->
               <div
-                class={`status-chip warning ${warningCount === 0 ? "inactive" : ""}`}
+                class={`status-chip warning ${currentProject.pendingApprovals > 0 ? "" : "inactive"}`}
               >
-                <span class="status-number">{warningCount}</span>
+                <span class="status-number"
+                  >{currentProject.pendingApprovals}</span
+                >
                 <div class="status-content">
-                  <div class="status-title">Problema / Solicitud</div>
-                  <div class="status-desc">
-                    {
-                      warningCount === 0
-                        ? "Sin problemas"
-                        : "Requieren atención"
-                    }
-                  </div>
+                  <div class="status-title">Por Aprobar</div>
+                  <div class="status-desc">Materiales y Estimaciones</div>
                 </div>
               </div>
 
-              <!-- Widget PROGRESO - Cambia automáticamente según successCount -->
-              <div
-                class={`status-chip success ${successCount === 0 ? "inactive" : ""}`}
-              >
-                <span class="status-number">{successCount}</span>
+              <div class="status-chip success">
+                <span class="status-number"
+                  >{(currentProject.progress * 100).toFixed(0)}%</span
+                >
                 <div class="status-content">
-                  <div class="status-title">Progreso / Consulta</div>
-                  <div class="status-desc">
-                    {
-                      successCount === 0
-                        ? "Sin actividad"
-                        : "Informes y preguntas"
-                    }
-                  </div>
+                  <div class="status-title">Avance General</div>
+                  <div class="status-desc">Progreso de obra</div>
                 </div>
               </div>
             </div>
           </div>
-</DashboardLayout>
-
-<div class="dashboard-grid">
-  <!-- Main Area - Incidents Table -->
-  <div class="main-area">
-    <div class="incidents-section">
-      <div class="incidents-header">
-        <h3 style="margin:0;color:#1e293b;font-size:1.25rem;font-weight:600">
-          Incidencias Activas
-        </h3>
-        <div class="incidents-filters">
-          <select class="filter-select">
-            <option>Tipo</option>
-            <option>Seguridad</option>
-            <option>Material</option>
-            <option>Progreso</option>
-            <option>Consulta</option>
-          </select>
-          <select class="filter-select">
-            <option>Estado</option>
-            <option>Pendiente</option>
-            <option>En proceso</option>
-            <option>Completado</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="incidents-table-container">
-        <table class="incidents-table">
-          <thead>
-            <tr>
-              <th>Tipo</th>
-              <th>Descripción</th>
-              <th>Reportó</th>
-              <th>Fecha</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-critical">Seguridad</span></td>
-              <td>Falla en arnés de seguridad piso 14</td>
-              <td>Juan Pérez</td>
-              <td>18 Jul, 2024</td>
-              <td><button class="btn-action">Ver</button></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-warning">Material</span></td>
-              <td>Se necesita más cemento para la losa</td>
-              <td>Ana Gómez</td>
-              <td>18 Jul, 2024</td>
-              <td><button class="btn-action">Ver</button></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">Progreso</span></td>
-              <td>Instalación eléctrica del piso 5 completa</td>
-              <td>Carlos Ruiz</td>
-              <td>17 Jul, 2024</td>
-              <td><button class="btn-action">Ver</button></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-info">Consulta</span></td>
-              <td>Duda sobre plano de plomería</td>
-              <td>Laura Méndez</td>
-              <td>16 Jul, 2024</td>
-              <td><button class="btn-action">Ver</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Right Sidebar -->
-  <aside class="right-sidebar">
-    <!-- Control de Costos -->
-    <div class="sidebar-card">
-      <h3
-        style="margin:0 0 16px;color:#1e293b;font-size:1.1rem;font-weight:600"
-      >
-        Control de Costos
-      </h3>
-
-      <div class="cost-item">
-        <div class="cost-label">Presupuesto</div>
-        <div class="cost-value-large">$5,000,000.00</div>
-      </div>
-
-      <div class="cost-item">
-        <div class="cost-label">Gasto Actual</div>
-        <div class="cost-value-large" style="color:#1e293b">$0.00</div>
-      </div>
-
-      <div class="progress-section">
-        <div class="progress-bar-modern">
-          <div class="progress-fill-modern" style="width:0%"></div>
-        </div>
-        <div class="progress-text">0% del presupuesto utilizado</div>
-      </div>
-    </div>
-
-    <!-- Resumen del Proyecto -->
-    <div class="sidebar-card">
-      <h3
-        style="margin:0 0 16px;color:#1e293b;font-size:1.1rem;font-weight:600"
-      >
-        Resumen del Proyecto
-      </h3>
-
-      <div class="project-summary">
-        <div class="summary-item">
-          <div class="summary-label">Fecha de Inicio</div>
-          <div class="summary-value">01 Ene, 2024</div>
         </div>
 
-        <div class="summary-item">
-          <div class="summary-label">Fecha de Fin</div>
-          <div class="summary-value">31 Dic, 2024</div>
-        </div>
-
-        <div class="summary-item">
-          <div class="summary-label">Progreso</div>
-          <div class="summary-value">
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="progress-bar-small">
-                <div class="progress-fill-small" style="width:65%"></div>
+        <div class="dashboard-grid">
+          <!-- Main Area - Incidents Table -->
+          <div class="main-area">
+            <div class="incidents-section">
+              <div class="incidents-header">
+                <h3
+                  style="margin:0;color:#1e293b;font-size:1.25rem;font-weight:600"
+                >
+                  Incidencias Activas
+                </h3>
+                <div class="incidents-filters">
+                  <select class="filter-select">
+                    <option>Tipo</option>
+                    <option>Seguridad</option>
+                    <option>Material</option>
+                    <option>Progreso</option>
+                    <option>Consulta</option>
+                  </select>
+                </div>
               </div>
-              <span style="color:#3b82f6;font-weight:600">65%</span>
+
+              <div class="incidents-table-container">
+                <table class="incidents-table">
+                  <thead>
+                    <tr>
+                      <th>Tipo</th>
+                      <th>Descripción</th>
+                      <th>Reportó</th>
+                      <th>Fecha</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td
+                        ><span class="badge badge-critical">Seguridad</span></td
+                      >
+                      <td>Falla en arnés de seguridad piso 14</td>
+                      <td>Juan Pérez</td>
+                      <td>18 Jul, 2024</td>
+                      <td><button class="btn-action">Ver</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge badge-warning">Material</span></td>
+                      <td>Se necesita más cemento para la losa</td>
+                      <td>Ana Gómez</td>
+                      <td>18 Jul, 2024</td>
+                      <td><button class="btn-action">Ver</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge badge-success">Progreso</span></td>
+                      <td>Instalación eléctrica del piso 5 completa</td>
+                      <td>Carlos Ruiz</td>
+                      <td>17 Jul, 2024</td>
+                      <td><button class="btn-action">Ver</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge badge-info">Consulta</span></td>
+                      <td>Duda sobre plano de plomería</td>
+                      <td>Laura Méndez</td>
+                      <td>16 Jul, 2024</td>
+                      <td><button class="btn-action">Ver</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+
+          <!-- Right Sidebar -->
+          <aside class="right-sidebar">
+            <div class="sidebar-card">
+              <h3
+                style="margin:0 0 16px;color:#1e293b;font-size:1.1rem;font-weight:600"
+              >
+                Equipo en Sitio
+              </h3>
+              <div class="cost-item">
+                <div class="cost-label">Personal Activo</div>
+                <div class="cost-value-large">{currentProject.teamCount}</div>
+              </div>
+              <div class="progress-text">Registrados hoy en bitácora</div>
+            </div>
+
+            <!-- Resumen del Proyecto -->
+            <div class="sidebar-card">
+              <h3
+                style="margin:0 0 16px;color:#1e293b;font-size:1.1rem;font-weight:600"
+              >
+                Resumen del Proyecto
+              </h3>
+
+              <div class="project-summary">
+                <div class="summary-item">
+                  <div class="summary-label">Fecha de Inicio</div>
+                  <div class="summary-value">01 Ene, 2024</div>
+                </div>
+
+                <div class="summary-item">
+                  <div class="summary-label">Fecha de Fin</div>
+                  <div class="summary-value">31 Dic, 2024</div>
+                </div>
+
+                <div class="summary-item">
+                  <div class="summary-label">Progreso</div>
+                  <div class="summary-value">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div class="progress-bar-small">
+                        <div class="progress-fill-small" style="width:65%">
+                        </div>
+                      </div>
+                      <span style="color:#3b82f6;font-weight:600">65%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
+
+        <script>
+          // Logout functionality
+          document.addEventListener("DOMContentLoaded", function () {
+            const logoutBtn = document.querySelector(".btn-new-incident");
+            if (logoutBtn) {
+              logoutBtn.addEventListener("click", function () {
+                // Could be used for creating new incident
+                alert("Funcionalidad de nuevo incidente aquí");
+              });
+            }
+          });
+        </script>
       </div>
     </div>
-  </aside>
-</div>
-
-<script>
-  // Logout functionality
-  document.addEventListener("DOMContentLoaded", function () {
-    const logoutBtn = document.querySelector(".btn-new-incident");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", function () {
-        // Could be used for creating new incident
-        alert("Funcionalidad de nuevo incidente aquí");
-      });
-    }
-  });
-</script>
+  </div></DashboardLayout
+>
