@@ -51,21 +51,22 @@ export interface Incident {
     type: IncidentType;
     title: string;
     description: string;
+    // Autoría y Roles
     authorName: string;
-    authorRole: UserRole; // Vital para saber si es Cabo o Jefe
+    authorRole: 'superintendent' | 'resident' | 'cabo' | 'admin';
+    // Estados
     status: IncidentStatus;
-    approvalStatus?: ApprovalStatus; // CRÍTICO para Materiales
+    approvalStatus?: ApprovalStatus; // Crítico para el flujo B2B
     isCritical: boolean;
-    createdAt: string;
-    
-    // Payload específico para Solicitudes de Material
+    createdAt: string; // ISO String
+    // Detalle Específico (Payload variable)
     materialDetails?: {
         itemName: string;
         quantity: number;
         unit: string;
         justification: string;
     };
-    
+    // Evidencia
     hasPhotos: boolean;
     gpsLocation?: string;
 }

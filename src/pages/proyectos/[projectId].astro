@@ -4,7 +4,7 @@ import Topbar from "../../components/dashbord/Topbar.astro";
 import Sidebar from "../../components/dashbord/Sidebar.astro";
 import CommentsWidget from "../../components/incidents/CommentsWidget.astro";
 import "../../styles/dashbord.css";
-import { getAllIncidents } from "../../service/incident.service";
+import { getIncidents } from "../../service/incident.service";
 
 const { projectId } = Astro.params;
 
@@ -85,10 +85,11 @@ function getProjectIcon(iconType: string): string {
 const project = proyectos.find((p) => p.id === projectId);
 
 // load incidents to display as cards in the left column (design-only)
-const incidents = await getAllIncidents();
-const projectIncidents = incidents.filter(
-  (i) => String(i.projectId) === String(projectId)
-); // filter by projectId
+const incidents = await getIncidents();
+const projectIncidents = incidents.filter((i) => {
+  const pid = String(i.projectId);
+  return pid === String(projectId) || pid === `p-${projectId}`;
+}); // filter by projectId con soporte a prefijo móvil
 const selected = projectIncidents[0] || null;
 ---
 
@@ -200,8 +201,8 @@ const selected = projectIncidents[0] || null;
                       <div class="card-material">
                         Cantidad:{" "}
                         <strong>
-                          {inc.materialDetails.quantity}{" "}
-                          {inc.materialDetails.unit}
+                          {inc.materialDetails?.quantity}{" "}
+                          {inc.materialDetails?.unit}
                         </strong>
                       </div>
                     ) : null}

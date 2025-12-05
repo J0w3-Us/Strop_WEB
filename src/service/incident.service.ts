@@ -1,80 +1,67 @@
 // Mock data aligned with the mobile IncidentModel (covers 5 types)
-export async function getAllIncidents(_token?: string): Promise<any[]> {
+import type { Incident } from '../types';
+
+// 1. Simulación de Fetch (GET)
+export const getIncidents = async (): Promise<Incident[]> => {
+  // Simulamos delay de red
+  await new Promise(resolve => setTimeout(resolve, 50));
+
   return [
     {
-      id: 'inc-01',
+      id: 'inc-001',
+      projectId: 'p-1',
       type: 'materialRequest',
-      projectId: '1',
       title: 'Solicitud de Cemento Gris',
-      description: 'Se requiere para colado de losa zona norte.',
+      description: 'Se requiere material urgente para colado de losa en Zona Norte.',
       authorName: 'Ing. Juan Pérez',
-      authorRole: 'superintendent', // Alineado con UserRole
+      authorRole: 'superintendent',
       status: 'open',
-      approvalStatus: 'pending',
+      approvalStatus: 'pending', // ESTADO CLAVE: Habilita botones
+      isCritical: false,
+      createdAt: new Date().toISOString(),
+      hasPhotos: false,
       materialDetails: {
         itemName: 'Cemento Cruz Azul',
         quantity: 50,
         unit: 'bultos',
-        justification: 'Construcción de losa en área norte'
-      },
-      hasPhotos: true,
-      isCritical: true,
-      createdAt: '2024-10-20T10:00:00Z',
-      gpsLocation: '19.432608,-99.133209'
+        justification: 'Colado losa nivel 4'
+      }
     },
     {
-      id: 'inc-02',
-      projectId: '1',
+      id: 'inc-002',
+      projectId: 'p-1',
       type: 'safetyIncident',
-      title: 'Falta de casco en obra',
-      description: '3 obreros detectados sin equipo de protección.',
-      authorName: 'Pedro Gómez',
-      authorRole: 'resident', // Residente
+      title: 'Personal sin casco en altura',
+      description: 'Se detectó cuadrilla de pintura trabajando en andamio sin EPP completo.',
+      authorName: 'Carlos Ruiz',
+      authorRole: 'cabo',
       status: 'open',
-      approvalStatus: 'approved',
-      hasPhotos: false,
-      isCritical: true,
-      createdAt: '2024-09-15T08:30:00Z',
+      approvalStatus: 'assigned',
+      isCritical: true, // ESTADO CLAVE: Alerta visual
+      createdAt: new Date(Date.now() - 86400000).toISOString(),
+      hasPhotos: true,
+      gpsLocation: '19.4326,-99.1332'
     },
     {
-      id: 'inc-03',
-      projectId: '2',
+      id: 'inc-003',
+      projectId: 'p-1',
       type: 'progressReport',
-      title: 'Avance de encofrado - Piso 3',
-      description: 'Encofrado completado al 100% en la zona oeste.',
-      authorName: 'Laura Martínez',
+      title: 'Avance de Muros Perimetrales',
+      description: 'Terminada la barda colindante sur. Iniciando aplanados.',
+      authorName: 'Arq. Ana López',
       authorRole: 'resident',
       status: 'closed',
-      hasPhotos: true,
       isCritical: false,
-      createdAt: '2024-10-18T14:20:00Z',
-    },
-    {
-      id: 'inc-04',
-      projectId: '2',
-      type: 'problem',
-      title: 'Retraso en entrega de acero',
-      description: 'Proveedor reporta retraso de 2 semanas.',
-      authorName: 'Miguel Torres',
-      authorRole: 'cabo', // Personal de campo
-      status: 'open',
-      approvalStatus: 'pending',
-      hasPhotos: false,
-      isCritical: false,
-      createdAt: '2024-10-19T09:00:00Z',
-    },
-    {
-      id: 'inc-05',
-      projectId: '3',
-      type: 'consultation',
-      title: 'Consulta sobre junta de dilatación',
-      description: '¿Qué especificación aplicar para tránsito pesado?',
-      authorName: 'Sofía Ruiz',
-      authorRole: 'owner', // Dueño/Arquitecto
-      status: 'open',
-      hasPhotos: false,
-      isCritical: false,
-      createdAt: '2024-10-21T11:45:00Z',
-    },
+      createdAt: new Date(Date.now() - 172800000).toISOString(),
+      hasPhotos: true
+    }
   ];
-}
+};
+
+// 2. Simulación de Acción (POST/PUT)
+export const updateIncidentStatus = async (id: string, status: 'approved' | 'rejected') => {
+    console.log(`[API] Actualizando incidencia ${id} a estado: ${status}`);
+    // Aquí iría el fetch real a tu backend
+    await new Promise(resolve => setTimeout(resolve, 500)); 
+    return { success: true, newStatus: status };
+};
