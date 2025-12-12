@@ -1,0 +1,71 @@
+---
+// Topbar component — self-contained, minimal styles
+---
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <button
+        class="action-btn sidebar-toggle-btn"
+        id="btn-sidebar-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        title="Abrir menú"
+      >
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="brand-section">
+        <div class="avatar">S</div>
+        <div class="brand-info">
+          <div class="brand-name">Strop</div>
+          <div class="brand-subtitle">Administrador</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-box">
+        <span class="material-symbols-outlined search-icon" aria-hidden="true"
+          >search</span
+        >
+        <input
+          aria-label="Buscar"
+          type="search"
+          placeholder="Buscar proyectos, incidencias o usuarios..."
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" aria-label="Notificaciones">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+
+      <button class="action-btn" aria-label="Ajustes">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+
+      <button class="avatar-btn" aria-label="Cuenta">
+        <span class="material-symbols-outlined avatar-icon" aria-hidden="true"
+          >account_circle</span
+        >
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Toggle sidebar by dispatching the custom event expected by the Sidebar component
+  (function () {
+    try {
+      const btn = document.getElementById("btn-sidebar-toggle");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        document.dispatchEvent(new Event("sidebar:toggle"));
+      });
+    } catch (e) {
+      // ignore in non-browser environments
+    }
+  })();
+</script>

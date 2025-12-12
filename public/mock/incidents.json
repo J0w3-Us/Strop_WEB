@@ -1,0 +1,69 @@
+[
+  {
+    "id": "INC-001",
+    "projectId": "PRJ-ALPHA",
+    "type": "electrical",
+    "priority": "critical",
+    "approvalStatus": "pending",
+    "status": "open",
+    "updatedAt": "2025-12-06T08:40:00Z",
+    "createdAt": "2025-12-06T08:30:00Z",
+    "photos": ["/assets/sample/photo1.jpg"],
+    "location": { "lat": 19.4326, "lng": -99.1332, "place": "Baño Principal" },
+    "assignedTo": null
+  },
+  {
+    "id": "INC-002",
+    "projectId": "PRJ-ALPHA",
+    "type": "material",
+    "priority": "medium",
+    "approvalStatus": "approved",
+    "status": "inProgress",
+    "updatedAt": "2025-12-05T14:12:00Z",
+    "createdAt": "2025-12-05T13:55:00Z",
+    "photos": [],
+    "material": { "category": "Cemento", "item": "Cemento Portland", "quantity": 30, "unit": "bags" },
+    "location": { "lat": 19.4327, "lng": -99.1333, "place": "Zona A" },
+    "assignedTo": "user-02"
+  },
+  {
+    "id": "INC-003",
+    "projectId": "PRJ-BETA",
+    "type": "safety",
+    "priority": "high",
+    "approvalStatus": "pending",
+    "status": "pendingApproval",
+    "updatedAt": "2025-12-05T09:00:00Z",
+    "createdAt": "2025-12-05T08:55:00Z",
+    "photos": ["/assets/sample/photo2.jpg", "/assets/sample/photo3.jpg"],
+    "location": { "lat": 19.4330, "lng": -99.1330, "place": "Andén 3" },
+    "assignedTo": null
+  },
+  {
+    "id": "INC-004",
+    "projectId": "PRJ-BETA",
+    "type": "material",
+    "priority": "low",
+    "approvalStatus": "pending",
+    "status": "open",
+    "updatedAt": "2025-12-04T16:20:00Z",
+    "createdAt": "2025-12-04T16:10:00Z",
+    "photos": [],
+    "material": { "category": "Herramienta", "item": "Taladro", "quantity": 2, "unit": "pcs" },
+    "location": { "lat": 19.4331, "lng": -99.1335, "place": "Almacén" },
+    "assignedTo": "user-03"
+  },
+  {
+    "id": "INC-005",
+    "projectId": "PRJ-ALPHA",
+    "type": "structural",
+    "priority": "critical",
+    "approvalStatus": "approved",
+    "status": "inProgress",
+    "updatedAt": "2025-12-06T07:10:00Z",
+    "createdAt": "2025-12-06T06:50:00Z",
+    "photos": ["/assets/sample/photo4.jpg"],
+    "location": { "lat": 19.4325, "lng": -99.1334, "place": "Baño Principal" },
+    "assignedTo": "user-01"
+  }
+]

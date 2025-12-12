@@ -1,0 +1,201 @@
+---
+// Sidebar component — lightweight navigation
+---
+
+<aside class="sidebar sidebar--collapsed" id="site-sidebar" aria-hidden="false">
+  <div class="sidebar-content">
+    <div class="nav-column">
+      <nav aria-label="Principal">
+        <a
+          href="/dashbord"
+          class="nav-item"
+          data-path="/dashbord"
+          title="Puesto de Mando"
+        >
+          <span class="nav-icon" aria-hidden="true"
+            ><span class="material-symbols-outlined">dashboard</span></span
+          >
+          <span class="nav-label">Puesto de Mando</span>
+        </a>
+
+        <a
+          href="/incidencias"
+          class="nav-item"
+          data-path="/incidencias"
+          title="Incidencias"
+        >
+          <span class="nav-icon" aria-hidden="true"
+            ><span class="material-symbols-outlined">forum</span></span
+          >
+          <span class="nav-label">Incidencias</span>
+        </a>
+
+        <a
+          href="/proyectos"
+          class="nav-item"
+          data-path="/proyectos"
+          title="Proyectos"
+        >
+          <span class="nav-icon" aria-hidden="true"
+            ><span class="material-symbols-outlined">folder_open</span></span
+          >
+          <span class="nav-label">Proyectos</span>
+        </a>
+
+        <a
+          href="/configuracion/usuarios"
+          class="nav-item"
+          data-path="/configuracion/usuarios"
+          title="Usuarios"
+        >
+          <span class="nav-icon" aria-hidden="true"
+            ><span class="material-symbols-outlined">groups</span></span
+          >
+          <span class="nav-label">Usuarios</span>
+        </a>
+
+        <a
+          href="/configuracion/teams"
+          class="nav-item"
+          data-path="/configuracion/teams"
+          title="Equipos"
+        >
+          <span class="nav-icon" aria-hidden="true"
+            ><span class="material-symbols-outlined">settings</span></span
+          >
+          <span class="nav-label">Equipos</span>
+        </a>
+      </nav>
+
+      <!-- footer removed: branding moved to Topbar to avoid duplication -->
+    </div>
+
+    <script>
+      // Sidebar behavior: active link + open/close API with mobile detection
+      (function () {
+        try {
+          const sidebar = document.getElementById("site-sidebar");
+          const backdrop = document.getElementById("sidebar-backdrop");
+          const isMobile = () => window.innerWidth <= 768;
+
+          function markActive() {
+            const path = location.pathname.replace(/\/$/, "") || "/";
+            const items = document.querySelectorAll(".nav-item");
+            items.forEach((el) => {
+              const target =
+                el.getAttribute("data-path") || el.getAttribute("href");
+              if (!target) return;
+              const t = target.replace(/\/$/, "") || "/";
+              if (path === t || path.startsWith(t + "/")) {
+                el.classList.add("active");
+              } else {
+                el.classList.remove("active");
+              }
+            });
+          }
+
+          function updateToggleIcon(isOpen: boolean) {
+            const btn = document.getElementById("btn-sidebar-toggle");
+            if (!btn) return;
+            const icon = btn.querySelector(".material-symbols-outlined");
+            if (!icon) return;
+            icon.textContent = isOpen ? "close" : "menu";
+            btn.setAttribute(
+              "aria-label",
+              isOpen ? "Cerrar menú" : "Abrir menú"
+            );
+          }
+
+          function openSidebar() {
+            if (!sidebar) return;
+            sidebar.classList.add("open");
+            sidebar.setAttribute("aria-hidden", "false");
+            if (backdrop && isMobile()) backdrop.classList.add("visible");
+            updateToggleIcon(true);
+            // mark as expanded
+            try {
+              sidebar.classList.remove("sidebar--collapsed");
+            } catch (e) {}
+          }
+
+          function closeSidebar() {
+            if (!sidebar) return;
+            sidebar.classList.remove("open");
+            sidebar.setAttribute("aria-hidden", "false"); // keep accessible on desktop
+            if (backdrop) backdrop.classList.remove("visible");
+            updateToggleIcon(false);
+            try {
+              sidebar.classList.add("sidebar--collapsed");
+            } catch (e) {}
+          }
+
+          function toggleSidebar() {
+            if (!sidebar) return;
+            if (sidebar.classList.contains("open")) {
+              closeSidebar();
+            } else {
+              openSidebar();
+            }
+          }
+
+          // Custom event API
+          document.addEventListener("sidebar:open", openSidebar);
+          document.addEventListener("sidebar:close", closeSidebar);
+          document.addEventListener("sidebar:toggle", toggleSidebar);
+
+          // Backdrop click closes sidebar
+          if (backdrop) {
+            backdrop.addEventListener("click", closeSidebar);
+          }
+
+          // Note: hover-based expansion removed — opening/closing is controlled by the toggle/button only.
+
+          // ESC to close
+          document.addEventListener("keydown", (ev) => {
+            if (ev.key === "Escape" && sidebar?.classList.contains("open")) {
+              closeSidebar();
+            }
+          });
+
+          // Auto-close on mobile when clicking a link
+          document.querySelectorAll(".nav-item").forEach((link) => {
+            link.addEventListener("click", () => {
+              if (isMobile() && sidebar?.classList.contains("open")) {
+                setTimeout(() => closeSidebar(), 150);
+              }
+            });
+          });
+
+          // Handle window resize
+          let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+          window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              if (!isMobile() && sidebar?.classList.contains("open")) {
+                // On desktop, remove .open class but keep sidebar visible (hover works)
+                sidebar.classList.remove("open");
+                if (backdrop) backdrop.classList.remove("visible");
+                updateToggleIcon(false);
+              }
+            }, 250);
+          });
+
+          // initial collapsed state
+          if (sidebar) {
+            try {
+              if (sidebar.classList.contains("open"))
+                sidebar.classList.remove("sidebar--collapsed");
+              else sidebar.classList.add("sidebar--collapsed");
+            } catch (e) {}
+          }
+          markActive();
+        } catch (e) {
+          console.error("Sidebar initialization error:", e);
+        }
+      })();
+    </script>
+  </div>
+</aside>
+
+<!-- backdrop placed after aside so it overlays the page when visible -->
+<div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>

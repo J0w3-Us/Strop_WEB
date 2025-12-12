@@ -1,0 +1,131 @@
+﻿---
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/login.css";
+---
+
+<Layout title="Inicio de Sesión - Strop">
+  <main class="auth-page">
+    <div class="layout-container">
+      <div class="conteiner">
+        <h1>
+          <a href="/" class="brand">
+            <span class="brand-title">Strop</span>
+          </a>
+        </h1>
+      </div>
+
+      <div class="card-wrapper">
+        <div class="card-inner">
+          <div class="heading">
+            <div class="heading-inner">
+              <h2 class="heading-title">Bienvenido de vuelta</h2>
+              <p class="heading-subtitle">
+                Iniciar Sesión para acceder a Strop
+              </p>
+            </div>
+          </div>
+
+          <form method="post" action="/api/auth/login" class="login-form">
+            <!-- Email / Username -->
+            <label class="field">
+              <p class="field-label">Correo electrónico</p>
+              <div class="field-row">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Correo electrónico"
+                  class="form-input"
+                  required
+                />
+                <div class="input-icon">
+                  <span
+                    class="material-symbols-outlined"
+                    aria-hidden="true"
+                    title="Correo">mail</span
+                  >
+                </div>
+              </div>
+            </label>
+
+            <!-- Password -->
+            <label class="field">
+              <p class="field-label">Contraseña</p>
+              <div class="field-row">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Contraseña"
+                  class="form-input"
+                  required
+                />
+                <button
+                  id="pw-toggle"
+                  type="button"
+                  class="input-icon"
+                  aria-pressed="false"
+                  aria-label="Mostrar contraseña"
+                >
+                  <span class="material-symbols-outlined" aria-hidden="true"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+            </label>
+
+            <a class="forgot-link" href="/auth/reset-password"
+              >¿Olvidaste tu contraseña?</a
+            >
+
+            <div
+              id="form-error"
+              role="status"
+              aria-live="polite"
+              class="form-error"
+              hidden
+            >
+            </div>
+
+            <div class="action">
+              <button id="login-submit" type="submit" class="primary-btn">
+                <span class="btn-text">Iniciar Sesión</span>
+                <span class="btn-spinner" aria-hidden="true" hidden></span>
+              </button>
+            </div>
+
+            <div class="separator"><span>O continúa con</span></div>
+
+            <!-- icono de google -->
+
+            <div class="social">
+              <button type="button" class="alt-btn">
+                <svg
+                  class="social-icon"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M22.5777 12.2541C22.5777 11.4541 22.5177 10.6541 22.3977 9.87409H12.0077V14.3041H18.0677C17.8477 15.7541 17.0377 16.9941 15.8277 17.8141V20.3341H19.5877C21.5777 18.5241 22.5777 15.6541 22.5777 12.2541Z"
+                    fill="#4285F4"></path>
+                  <path
+                    d="M12.0077 23.0002C15.2277 23.0002 17.9177 21.9102 19.5877 20.3302L15.8277 17.8102C14.7577 18.5202 13.4877 18.9602 12.0077 18.9602C9.17774 18.9602 6.75774 17.1202 5.86774 14.6502H2.10774V17.2402C3.78774 20.6702 7.58774 23.0002 12.0077 23.0002Z"
+                    fill="#34A853"></path>
+                  <path
+                    d="M5.86795 14.65C5.64795 13.94 5.52795 13.18 5.52795 12.4C5.52795 11.62 5.64795 10.86 5.86795 10.15V7.56H2.10795C1.40795 8.91 1.00795 10.59 1.00795 12.4C1.00795 14.21 1.40795 15.89 2.10795 17.24L5.86795 14.65Z"
+                    fill="#FBBC05"></path>
+                  <path
+                    d="M12.0077 5.83984C13.5677 5.83984 14.9977 6.38984 16.1277 7.46984L19.6577 3.99984C17.9077 2.27984 15.2277 0.999844 12.0077 0.999844C7.58774 0.999844 3.78774 3.32984 2.10774 6.75984L5.86774 9.34984C6.75774 6.87984 9.17774 5.83984 12.0077 5.83984Z"
+                    fill="#EA4335"></path>
+                </svg>
+                <span>Iniciar Sesión con Google</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/scripts/login.js"></script>
+  </main>
+</Layout>

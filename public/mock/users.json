@@ -1,0 +1,23 @@
+[
+  {
+    "username": "admin",
+    "password": "admin",
+    "redirectTo": "/dashbord",
+    "name": "Administrador de Prueba",
+    "email": "admin@example.com"
+  },
+  {
+    "username": "user",
+    "password": "user",
+    "redirectTo": "/dashbord",
+    "name": "Usuario de Prueba",
+    "email": "user@example.com"
+  },
+  {
+    "username": "admin",
+    "password": "prueba12",
+    "redirectTo": "/dashbord",
+    "name": "Administrador de Prueba",
+    "email": "jose@gmail.com"
+  }
+]

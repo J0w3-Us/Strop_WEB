@@ -1,25 +1,11 @@
 import type { User } from '../types';
-
-const API_BASE = (import.meta.env.PUBLIC_API_URL as string) || '/api';
-
-async function safeJson<T>(res: Response): Promise<T> {
-  const text = await res.text();
-  try {
-    return text ? JSON.parse(text) : ({} as T);
-  } catch (err) {
-    throw new Error('Invalid JSON from server');
-  }
-}
+import { request } from './apiClient';
 
 export async function getAllUsers(token?: string): Promise<User[]> {
   try {
-    const res = await fetch(`${API_BASE}/users`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    });
-    if (!res.ok) throw new Error(`GET /users failed: ${res.status}`);
-    return await safeJson<User[]>(res);
+    return await request<User[]>('/users', { method: 'GET', token });
   } catch (err) {
-    // Fallback to local stub so UI can work offline
+    // Fallback local stub so UI remains functional during development
     return [
       {
         id: 1,
@@ -57,45 +43,19 @@ export async function getAllUsers(token?: string): Promise<User[]> {
   }
 }
 
-export async function getUserById(id: number, token?: string): Promise<User> {
-  const res = await fetch(`${API_BASE}/users/${id}`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-  });
-  if (!res.ok) throw new Error(`GET /users/${id} failed: ${res.status}`);
-  return await safeJson<User>(res);
+export async function getUserById(id: string | number, token?: string): Promise<User> {
+  return await request<User>(`/users/${id}`, { method: 'GET', token });
 }
 
 export async function createUser(payload: Partial<User>, token?: string): Promise<User> {
-  const res = await fetch(`${API_BASE}/users`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`POST /users failed: ${res.status}`);
-  return await safeJson<User>(res);
+  return await request<User>('/users', { method: 'POST', body: payload, token });
 }
 
-export async function updateUser(id: number, payload: Partial<User>, token?: string): Promise<User> {
-  const res = await fetch(`${API_BASE}/users/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error(`PUT /users/${id} failed: ${res.status}`);
-  return await safeJson<User>(res);
+export async function updateUser(id: string | number, payload: Partial<User>, token?: string): Promise<User> {
+  return await request<User>(`/users/${id}`, { method: 'PUT', body: payload, token });
 }
 
-export async function deleteUser(id: number, token?: string): Promise<void> {
-  const res = await fetch(`${API_BASE}/users/${id}`, {
-    method: 'DELETE',
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-  });
-  if (!res.ok) throw new Error(`DELETE /users/${id} failed: ${res.status}`);
+export async function deleteUser(id: string | number, token?: string): Promise<void> {
+  await request<void>(`/users/${id}`, { method: 'DELETE', token });
 }
 
