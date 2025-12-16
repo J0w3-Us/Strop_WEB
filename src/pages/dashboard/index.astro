@@ -1,0 +1,13 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import DashboardStats from "../../components/dashboard/DashboardStats";
+import "../../styles/modal.css";
+import "../../styles/forms.css";
+---
+
+<DashboardLayout title="Dashboard | STROP Admin">
+    <div class="bento-grid">
+        <!-- Todos los widgets vienen del componente React con datos dinámicos -->
+        <DashboardStats client:load />
+    </div>
+</DashboardLayout>

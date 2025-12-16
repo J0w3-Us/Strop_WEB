@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LoginForm from "../components/auth/Login";
+import "../styles/auth.css";
+---
+
+<Layout title="Iniciar Sesión | STROP Admin">
+    <main class="auth-page-wrapper">
+        <LoginForm client:load />
+    </main>
+</Layout>

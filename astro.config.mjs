@@ -1,9 +1,17 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+
+import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-    output: 'static',
-    // If you plan to deploy static site (SSG), set `output: 'static'`.
-    // If you need server-rendering in production, install an adapter (e.g. @astrojs/node) and configure it here.
+  // Habilita SSR para protección de rutas y endpoints dinámicos
+  output: 'server',
+
+  integrations: [react()],
+
+  adapter: node({
+    mode: 'standalone',
+  }),
 });

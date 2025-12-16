@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
----
+// src/pages/index.astro
+// Esta página actúa como router raíz.
+// El middleware se encarga de redirigir, pero por seguridad añadimos redirección aquí también.
 
-<Layout>
-  <meta http-equiv="refresh" content="0;url=/auth/login" />
-</Layout>
+return Astro.redirect("/dashboard");
+---

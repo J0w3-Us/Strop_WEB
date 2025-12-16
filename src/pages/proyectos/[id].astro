@@ -1,0 +1,72 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import ProjectDetail from "../../components/projects/ProjectDetail";
+import "../../styles/project-detail.css";
+import "../../styles/forms.css";
+import "../../styles/incidents.css";
+
+// Obtener el ID del proyecto de la URL
+const { id } = Astro.params;
+
+// Mock data - Los conteos de incidencias se calculan dinámicamente en ProjectDetail
+const mockProjects = [
+    {
+        id: "proj-1",
+        name: "Torre Aurora",
+        code: "TA",
+        location: "Zona Norte",
+        status: "active",
+        // criticalCount, pendingCount, resolvedCount se calculan desde las incidencias reales
+        criticalCount: 0, // Placeholder, se sobrescribe con datos reales
+        pendingCount: 0,
+        resolvedCount: 0,
+        progress: 65,
+        lastActivity: "1/11/2023, 4:00:00 a.m.",
+        client: "Grupo Inmobiliario Norte",
+        description: "Torre residencial de 20 pisos con amenidades premium.",
+        startDate: "2023-01-15",
+        endDate: "2024-06-30",
+    },
+    {
+        id: "proj-2",
+        name: "Torre Boreal",
+        code: "TB",
+        location: "Zona Norte",
+        status: "active",
+        criticalCount: 0,
+        pendingCount: 0,
+        resolvedCount: 0,
+        progress: 45,
+        lastActivity: "Hace 30 min",
+        client: "Corp Boreal",
+        description: "Complejo de oficinas corporativas.",
+        startDate: "2023-03-01",
+        endDate: "2024-12-15",
+    },
+    {
+        id: "proj-3",
+        name: "Residencial Centro",
+        code: "RC",
+        location: "Centro Histórico",
+        status: "active",
+        criticalCount: 0,
+        pendingCount: 0,
+        resolvedCount: 0,
+        progress: 85,
+        lastActivity: "Hace 2 horas",
+        client: "Desarrollos Centro",
+        description: "Proyecto de vivienda en el corazón de la ciudad.",
+        startDate: "2023-06-01",
+        endDate: "2024-08-30",
+    },
+];
+
+const project = mockProjects.find((p) => p.id === id) || null;
+const pageTitle = project
+    ? `${project.name} | STROP Admin`
+    : "Proyecto no encontrado";
+---
+
+<DashboardLayout title={pageTitle}>
+    <ProjectDetail project={project} client:load />
+</DashboardLayout>

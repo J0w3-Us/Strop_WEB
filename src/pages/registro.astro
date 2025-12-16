@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import RegisterForm from "../components/auth/Register";
+import "../styles/auth.css";
+---
+
+<Layout title="Registro | STROP Admin">
+    <main class="auth-page-wrapper">
+        <RegisterForm client:load />
+    </main>
+</Layout>

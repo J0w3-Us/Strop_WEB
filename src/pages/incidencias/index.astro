@@ -1,0 +1,50 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import IncidentsList from "../../components/incidents/IncidentsList.jsx";
+import { dataService } from "../../services/dataService";
+import "../../styles/incidents.css";
+
+// Fetch all incidents
+const incidents = await dataService.incidents.list();
+---
+
+<DashboardLayout title="Incidencias | STROP Admin">
+    <div class="incidents-page">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Incidencias</h1>
+                <p class="page-subtitle">
+                    Visualiza y gestiona todas las incidencias reportadas
+                </p>
+            </div>
+        </div>
+
+        <IncidentsList client:load incidents={incidents} />
+    </div>
+</DashboardLayout>
+
+<style>
+    .incidents-page {
+        padding: 0;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0 0 0.25rem 0;
+    }
+
+    .page-subtitle {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin: 0;
+    }
+</style>

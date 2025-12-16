@@ -1,0 +1,561 @@
+/* src/styles/project-detail.css */
+/* Página de Detalle de Proyecto - Diseño Moderno */
+
+.project-detail-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   HERO HEADER
+   ============================================ */
+.project-hero {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.project-avatar {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    flex-shrink: 0;
+}
+
+.hero-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1E293B;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.25rem;
+}
+
+.hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+    background: #D1FAE5;
+    color: #047857;
+}
+
+.status-badge.paused {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.status-badge.completed {
+    background: #E2E8F0;
+    color: #475569;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748B;
+    font-size: 0.875rem;
+}
+
+.code-tag {
+    background: #F1F5F9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Stats Row */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #F1F5F9;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: 14px;
+    transition: all 0.2s;
+}
+
+.stat-card:hover {
+    background: #F1F5F9;
+}
+
+.stat-card.critical {
+    background: #FEF2F2;
+}
+
+.stat-card.warning {
+    background: #FFFBEB;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1E293B;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value.critical {
+    color: #EF4444;
+}
+
+.stat-value.warning {
+    color: #F59E0B;
+}
+
+.stat-value.success {
+    color: #10B981;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   TAB NAVIGATION
+   ============================================ */
+.project-tabs {
+    display: flex;
+    gap: 0.25rem;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.tab-button {
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-button:hover {
+    background: #F8FAFC;
+    color: #1E293B;
+}
+
+.tab-button.active {
+    background: #2563EB;
+    color: white;
+}
+
+.tab-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.tab-button:not(.active) .tab-badge {
+    background: #E2E8F0;
+    color: #64748B;
+}
+
+/* ============================================
+   INFO SECTION
+   ============================================ */
+.info-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.info-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94A3B8;
+}
+
+.info-value {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #1E293B;
+}
+
+.info-value.description {
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Progress bar horizontal */
+.progress-bar-horizontal {
+    height: 8px;
+    background: #E2E8F0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563EB 0%, #10B981 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+/* ============================================
+   PROJECT INCIDENTS LIST (Embedded)
+   ============================================ */
+.project-incidents-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Quick Stats Pills */
+.incident-quick-stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.stat-pill:hover {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+}
+
+.stat-pill.active {
+    background: #2563EB;
+    border-color: #2563EB;
+    color: white;
+}
+
+.stat-pill.pending.active {
+    background: #F59E0B;
+    border-color: #F59E0B;
+}
+
+.stat-pill.critical.active {
+    background: #EF4444;
+    border-color: #EF4444;
+}
+
+.stat-pill.resolved.active {
+    background: #10B981;
+    border-color: #10B981;
+}
+
+.pill-count {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pill-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Compact Search */
+.incident-search-compact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.incident-search-compact:focus-within {
+    background: white;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.incident-search-compact svg {
+    color: #94A3B8;
+    flex-shrink: 0;
+}
+
+.incident-search-compact input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.875rem;
+    color: #1E293B;
+}
+
+.incident-search-compact input::placeholder {
+    color: #94A3B8;
+}
+
+/* Incidents List */
+.project-incidents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Individual Incident Card */
+.project-incident-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-left-width: 4px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    animation: fadeSlideIn 0.3s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project-incident-card:hover {
+    background: #FAFBFC;
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transform: translateX(4px);
+}
+
+.incident-card-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.incident-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.incident-card-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #1E293B;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.incident-status-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.incident-card-desc {
+    font-size: 0.8rem;
+    color: #64748B;
+    margin: 0 0 0.5rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.incident-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    color: #94A3B8;
+}
+
+.meta-item svg {
+    opacity: 0.7;
+}
+
+.meta-type {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.incident-card-arrow {
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    color: #CBD5E1;
+    transition: all 0.2s;
+}
+
+.project-incident-card:hover .incident-card-arrow {
+    color: #3B82F6;
+    transform: translateX(2px);
+}
+
+/* Empty State */
+.no-incidents-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: #F8FAFC;
+    border: 2px dashed #E2E8F0;
+    border-radius: 16px;
+}
+
+.no-incidents-state svg {
+    color: #10B981;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.no-incidents-state h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #475569;
+    margin: 0 0 0.25rem;
+}
+
+.no-incidents-state p {
+    font-size: 0.875rem;
+    color: #94A3B8;
+    margin: 0;
+}

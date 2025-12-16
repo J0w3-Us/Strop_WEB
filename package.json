@@ -9,8 +9,15 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/node": "^9.5.1",
+    "@astrojs/react": "^4.4.2",
+    "@nanostores/react": "^1.0.0",
     "astro": "^5.15.5",
-    "nanostores": "^1.0.1"
+    "nanostores": "^1.0.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",

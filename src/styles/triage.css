@@ -1,0 +1,302 @@
+/* src/styles/triage.css */
+
+/* Wrapper */
+.triage-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Progress Header */
+.triage-progress {
+    margin-bottom: 1.5rem;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-count {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.progress-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.progress-hint kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--bg-surface-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progress-bar-container {
+    height: 4px;
+    background: var(--border-default);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563EB 0%, #10B981 100%);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Main Card */
+.triage-card {
+    background: var(--bg-surface);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-default);
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.triage-card.animating {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* Photo Section */
+.triage-photo {
+    position: relative;
+    height: 240px;
+    background: var(--bg-surface-secondary);
+    overflow: hidden;
+}
+
+.triage-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.triage-badges {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge-type,
+.badge-priority {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.triage-project-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.project-code {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #2563EB;
+}
+
+.project-name {
+    font-size: 0.75rem;
+    color: white;
+}
+
+/* Content Section */
+.triage-content {
+    padding: 1.5rem;
+}
+
+.triage-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.triage-description {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.triage-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-default);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.meta-item svg {
+    color: var(--text-muted);
+}
+
+/* Actions Section */
+.triage-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--bg-surface-secondary);
+    border-top: 1px solid var(--border-default);
+}
+
+.action-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-btn.reject {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--accent-danger);
+}
+
+.action-btn.reject:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.25);
+    transform: scale(1.02);
+}
+
+.action-btn.skip {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-default);
+}
+
+.action-btn.skip:hover:not(:disabled) {
+    background: var(--bg-surface-hover);
+    transform: scale(1.02);
+}
+
+.action-btn.approve {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-success);
+}
+
+.action-btn.approve:hover:not(:disabled) {
+    background: rgba(16, 185, 129, 0.25);
+    transform: scale(1.02);
+}
+
+.action-btn svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Empty State */
+.triage-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--accent-success);
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--accent-primary-hover);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .triage-photo {
+        height: 200px;
+    }
+
+    .triage-actions {
+        padding: 1rem;
+    }
+
+    .action-btn {
+        padding: 0.75rem;
+    }
+
+    .action-btn span {
+        display: none;
+    }
+}

@@ -1,0 +1,84 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import TriageCard from "../../components/triage/TriageCard";
+import "../../styles/triage.css";
+---
+
+<DashboardLayout title="Triage | STROP Admin">
+    <div class="triage-page">
+        <!-- Header -->
+        <div class="triage-header">
+            <div>
+                <h1 class="triage-page-title">Triage de Incidencias</h1>
+                <p class="triage-page-subtitle">
+                    Revisa y aprueba los reportes de campo rápidamente.
+                </p>
+            </div>
+
+            <a href="/dashboard" class="btn-secondary">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Volver
+            </a>
+        </div>
+
+        <!-- Triage Component -->
+        <TriageCard client:load />
+    </div>
+</DashboardLayout>
+
+<style>
+    .triage-page {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .triage-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+
+    .triage-page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+    }
+
+    .triage-page-subtitle {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        background: white;
+        border: 1px solid #e5e7eb;
+        color: #64748b;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+        border-color: #cbd5e1;
+        color: #1e293b;
+    }
+</style>

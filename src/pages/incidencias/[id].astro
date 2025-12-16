@@ -1,0 +1,25 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import IncidentDetail from "../../components/incidents/IncidentDetail.jsx";
+import { dataService } from "../../services/dataService";
+
+export const prerender = false; // Need SSR for dynamic IDs
+
+const { id } = Astro.params;
+
+// Fetch incident data
+let incident;
+try {
+    incident = await dataService.incidents.getById(id || "");
+} catch (e) {
+    console.error("Error fetching incident:", e);
+}
+
+if (!incident) {
+    return Astro.redirect("/404");
+}
+---
+
+<DashboardLayout title={`Incidencia ${incident.id} | Strop`}>
+    <IncidentDetail client:load incident={incident} />
+</DashboardLayout>

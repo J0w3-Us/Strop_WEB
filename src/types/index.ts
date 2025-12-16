@@ -27,14 +27,14 @@ export interface Project {
     startDate: string;
     estimatedEndDate: string;
     progress: number;         // Float 0.0 - 1.0
-    
+
     // Jerarquía (Para ProjectTeamScreen)
     superintendentId?: string;
     residentIds?: string[];
-    
+
     // KPIs Calculados (Para Smart Feed)
     openIncidents: number;
-    pendingApprovals: number; 
+    pendingApprovals: number;
     teamCount: number;
 }
 
@@ -76,6 +76,7 @@ export interface Comment {
     id: string;
     incidentId: string;
     authorName: string;
+    authorRole?: string;
     content: string;
     createdAt: string;
     isSystemMessage?: boolean;

@@ -1,0 +1,44 @@
+[2m08:27:21[22m [34m[content][39m Syncing content
+[2m08:27:21[22m [34m[content][39m Synced content
+[2m08:27:21[22m [34m[types][39m Generated [2m361ms[22m
+[2m08:27:21[22m [34m[check][39m Getting diagnostics for Astro files in C:\Users\fitch\source\visual\Strop_WEB...
+[96msrc/middleware.ts[0m:[93m11[0m:[93m11[0m - [93mwarning[0m[90m ts(6133): [0m'isPublicRoute' is declared but its value is never read.
+
+[7m11[0m     const isPublicRoute =
+[7m  [0m [93m          ~~~~~~~~~~~~~[0m
+
+[96msrc/components/auth/Register.jsx[0m:[93m37[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m37[0m             const response = await apiService.register({
+[7m  [0m [93m                  ~~~~~~~~[0m
+
+[96msrc/components/dashboard/TopInsights.jsx[0m:[93m2[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'React' is declared but its value is never read.
+
+[7m2[0m import React from 'react';
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/projects/ProjectList.jsx[0m:[93m4[0m:[93m22[0m - [93mwarning[0m[90m ts(6133): [0m'setProjects' is declared but its value is never read.
+
+[7m4[0m     const [projects, setProjects] = useState(initialProjects);
+[7m [0m [93m                     ~~~~~~~~~~~[0m
+
+[96msrc/service_backup/analytics.service.ts[0m:[93m1[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'User' is declared but its value is never read.
+
+[7m1[0m import type { User } from '../types';
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/services/apiService.js[0m:[93m54[0m:[93m87[0m - [93mwarning[0m[90m ts(6385): [0m'(from: number, length?: number | undefined): string' is deprecated.
+
+[7m54[0m                         token: `mock_token_${Date.now()}_${Math.random().toString(36).substr(2)}`
+[7m  [0m [93m                                                                                      ~~~~~~[0m
+
+[96msrc/store/authStore.ts[0m:[93m3[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'atom' is declared but its value is never read.
+
+[7m3[0m import { atom, map } from 'nanostores';
+[7m [0m [93m         ~~~~[0m
+
+Result (50 files): 
+- 0 errors
+- 0 warnings
+- 7 hints
+

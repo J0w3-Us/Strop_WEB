@@ -1,0 +1,647 @@
+---
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+---
+
+<DashboardLayout title="Ayuda | STROP">
+    <div class="help-page">
+        <div class="help-header">
+            <h1>Centro de Ayuda</h1>
+            <p>Encuentra respuestas a tus preguntas y aprende a usar STROP</p>
+        </div>
+
+        <!-- Búsqueda de ayuda -->
+        <div class="help-search">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Buscar en la ayuda..." />
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+            <a href="#inicio" class="quick-link-card">
+                <div class="quick-link-icon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"
+                        ></path>
+                    </svg>
+                </div>
+                <span class="quick-link-title">Primeros Pasos</span>
+                <span class="quick-link-desc">Aprende lo básico de STROP</span>
+            </a>
+
+            <a href="#proyectos" class="quick-link-card">
+                <div class="quick-link-icon projects">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M3 21h18"></path>
+                        <path d="M5 21V7l8-4 8 4v14"></path>
+                    </svg>
+                </div>
+                <span class="quick-link-title">Gestión de Proyectos</span>
+                <span class="quick-link-desc">Crea y administra proyectos</span>
+            </a>
+
+            <a href="#incidencias" class="quick-link-card">
+                <div class="quick-link-icon incidents">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                        ></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                </div>
+                <span class="quick-link-title">Incidencias</span>
+                <span class="quick-link-desc"
+                    >Reporta y gestiona incidencias</span
+                >
+            </a>
+
+            <a href="#reportes" class="quick-link-card">
+                <div class="quick-link-icon reports">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                </div>
+                <span class="quick-link-title">Reportes</span>
+                <span class="quick-link-desc">Genera y exporta reportes</span>
+            </a>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Preguntas Frecuentes</h2>
+
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>
+                        <span>¿Cómo creo un nuevo proyecto?</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-content">
+                        <p>Para crear un nuevo proyecto:</p>
+                        <ol>
+                            <li>
+                                Ve a la sección <strong>Proyectos</strong> desde el
+                                menú lateral
+                            </li>
+                            <li>
+                                Haz clic en el botón <strong
+                                    >"Nuevo Proyecto"</strong>
+                            </li>
+                            <li>
+                                Completa la información: nombre, código,
+                                ubicación, cliente, etc.
+                            </li>
+                            <li>
+                                Haz clic en <strong>"Crear Proyecto"</strong>
+                            </li>
+                        </ol>
+                        <p>
+                            También puedes importar proyectos desde un archivo
+                            Excel.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <span>¿Cómo reporto una incidencia?</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-content">
+                        <p>Puedes reportar incidencias de dos formas:</p>
+                        <ol>
+                            <li>
+                                <strong>Desde la web:</strong> Entra al proyecto,
+                                ve a la pestaña "Incidencias" y usa el botón "Nueva
+                                Incidencia"
+                            </li>
+                            <li>
+                                <strong>Desde la app móvil:</strong> Usa el botón
+                                de cámara para capturar fotos y reportar directamente
+                                desde campo
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <span
+                            >¿Qué significan los colores en el mapa de calor?</span
+                        >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-content">
+                        <p>
+                            El mapa de calor usa colores para indicar el estado
+                            de cada proyecto:
+                        </p>
+                        <ul>
+                            <li>
+                                <span class="color-sample critical"></span>
+                                <strong>Rojo (Crítico):</strong> Hay incidencias críticas
+                                que requieren atención inmediata
+                            </li>
+                            <li>
+                                <span class="color-sample warning"></span>
+                                <strong>Amarillo (Atención):</strong> Hay más de 3
+                                incidencias pendientes
+                            </li>
+                            <li>
+                                <span class="color-sample ok"></span>
+                                <strong>Verde (OK):</strong> El proyecto está bajo
+                                control
+                            </li>
+                            <li>
+                                <span class="color-sample inactive"></span>
+                                <strong>Gris (Inactivo):</strong> El proyecto está
+                                pausado o completado
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <span>¿Cómo asigno usuarios a un proyecto?</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-content">
+                        <p>
+                            Los administradores pueden asignar usuarios a
+                            proyectos:
+                        </p>
+                        <ol>
+                            <li>Entra al detalle del proyecto</li>
+                            <li>Ve a la pestaña <strong>"Equipo"</strong></li>
+                            <li>
+                                Usa el botón <strong>"Agregar Miembro"</strong>
+                            </li>
+                            <li>
+                                Selecciona el usuario y asigna su rol
+                                (Superintendente, Residente, etc.)
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <span>¿Puedo exportar los datos a Excel?</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </summary>
+                    <div class="faq-content">
+                        <p>Sí, puedes exportar datos en varios formatos:</p>
+                        <ul>
+                            <li>
+                                <strong>Excel (.xlsx):</strong> Ideal para análisis
+                                en hojas de cálculo
+                            </li>
+                            <li>
+                                <strong>PDF:</strong> Para reportes formales y documentación
+                            </li>
+                            <li>
+                                <strong>CSV:</strong> Para integración con otros sistemas
+                            </li>
+                        </ul>
+                        <p>
+                            Busca el botón de exportar en cada sección
+                            (proyectos, incidencias, bitácora).
+                        </p>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                        ></path>
+                    </svg>
+                </div>
+                <h3>¿Necesitas más ayuda?</h3>
+                <p>Nuestro equipo de soporte está listo para asistirte</p>
+                <a href="mailto:soporte@strop.mx" class="btn-contact">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                        ></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Contactar Soporte
+                </a>
+            </div>
+        </div>
+    </div>
+</DashboardLayout>
+
+<style>
+    .help-page {
+        padding: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .help-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .help-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .help-header p {
+        color: #64748b;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .help-search {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+        margin-bottom: 2rem;
+        transition: all 0.2s;
+    }
+
+    .help-search:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .help-search svg {
+        color: #94a3b8;
+        flex-shrink: 0;
+    }
+
+    .help-search input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        font-family: inherit;
+        color: #1e293b;
+    }
+
+    .help-search input::placeholder {
+        color: #94a3b8;
+    }
+
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .quick-link-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem 1rem;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        text-decoration: none;
+        transition: all 0.25s;
+    }
+
+    .quick-link-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border-color: transparent;
+    }
+
+    .quick-link-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .quick-link-icon.projects {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .quick-link-icon.incidents {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .quick-link-icon.reports {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .quick-link-title {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .quick-link-desc {
+        font-size: 0.8rem;
+        color: #94a3b8;
+    }
+
+    .faq-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .faq-section h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 1.25rem 0;
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .faq-item {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .faq-item summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        font-weight: 500;
+        color: #1e293b;
+        cursor: pointer;
+        list-style: none;
+        transition: background 0.2s;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-item summary:hover {
+        background: #f8fafc;
+    }
+
+    .faq-item summary svg {
+        color: #94a3b8;
+        transition: transform 0.25s;
+        flex-shrink: 0;
+    }
+
+    .faq-item[open] summary svg {
+        transform: rotate(180deg);
+    }
+
+    .faq-item[open] summary {
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .faq-content {
+        padding: 1rem 1.25rem;
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .faq-content p {
+        margin: 0 0 0.75rem 0;
+    }
+
+    .faq-content ol,
+    .faq-content ul {
+        margin: 0.5rem 0;
+        padding-left: 1.25rem;
+    }
+
+    .faq-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .color-sample {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+
+    .color-sample.critical {
+        background: #ef4444;
+    }
+
+    .color-sample.warning {
+        background: #f59e0b;
+    }
+
+    .color-sample.ok {
+        background: #10b981;
+    }
+
+    .color-sample.inactive {
+        background: #9ca3af;
+    }
+
+    .contact-section {
+        display: flex;
+        justify-content: center;
+    }
+
+    .contact-card {
+        text-align: center;
+        padding: 2.5rem;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 20px;
+        max-width: 400px;
+    }
+
+    .contact-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin: 0 auto 1.25rem;
+    }
+
+    .contact-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .contact-card p {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin: 0 0 1.25rem 0;
+    }
+
+    .btn-contact {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+
+    .btn-contact:hover {
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .quick-links {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .quick-links {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

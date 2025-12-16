@@ -1,42 +1,162 @@
-/* ========================================
-   ESTILOS GLOBALES BASE
-   Configuración base de Tailwind y estilos compartidos
-   ======================================== */
+/* src/styles/_global.css */
 
-/* Tailwind directives */
+/* ==================== CSS VARIABLES (THEME SYSTEM) ==================== */
+:root {
+  /* Light Theme Colors - Main Content */
+  --bg-base: #F3F4F6;
+  --bg-surface: #FFFFFF;
+  --bg-surface-hover: #F8FAFC;
+  --bg-surface-secondary: #F1F5F9;
+
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+  --text-main: #1E293B;
+  /* Legacy alias */
+
+  --border-default: #E5E7EB;
+  --border-subtle: #F1F5F9;
+
+  --accent-primary: #2563EB;
+  --accent-primary-hover: #1D4ED8;
+  --accent-blue: #2563EB;
+  /* Alias for legacy styles */
+  --accent-success: #10B981;
+  --accent-warning: #F59E0B;
+  --accent-danger: #EF4444;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+
+  /* Legacy aliases for dashboard */
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  /* Sidebar - Always dark (original design) */
+  --sidebar-bg: #0F172A;
+  --sidebar-border: #1E293B;
+  --sidebar-hover: #1E293B;
+  --sidebar-text: #94A3B8;
+  --sidebar-text-active: #FFFFFF;
+  --sidebar-active: #2563EB;
+
+  /* Topbar - Light by default */
+  --topbar-bg: #FFFFFF;
+  --topbar-border: #E5E7EB;
+
+  /* Settings page nav */
+  --sidebar-item-active: #EFF6FF;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-base: #0F172A;
+  --bg-surface: #1E293B;
+  --bg-surface-hover: #334155;
+  --bg-surface-secondary: #334155;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-inverse: #0F172A;
+  --text-main: #F1F5F9;
+  /* Legacy alias */
+
+  --border-default: #334155;
+  --border-subtle: #475569;
+
+  --accent-primary: #3B82F6;
+  --accent-primary-hover: #2563EB;
+  --accent-blue: #3B82F6;
+  /* Alias for legacy styles */
+  --accent-success: #34D399;
+  --accent-warning: #FBBF24;
+  --accent-danger: #F87171;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+  /* Legacy aliases for dashboard */
+  --card-bg: #1E293B;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+  /* Sidebar - LIGHTER shade than bg-base for visibility */
+  --sidebar-bg: #1E293B;
+  --sidebar-border: #334155;
+  --sidebar-hover: #334155;
+  --sidebar-text: #94A3B8;
+  --sidebar-text-active: #FFFFFF;
+  --sidebar-item-hover: #334155;
+  --sidebar-item-active: rgba(59, 130, 246, 0.25);
+
+  /* Topbar */
+  --topbar-bg: #1E293B;
+  --topbar-border: #334155;
+}
+
+/* ==================== RESET ==================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Tailwind Base */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Reset y estilos base */
-html, body {
-  height: 100%;
-  margin: 0;
-  background-color: var(--color-bg-light);
-  color: var(--color-text);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* Estilos compartidos entre todas las páginas */
+/* ==================== UTILITY CLASSES ==================== */
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  background-color: var(--bg-surface-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
+  overflow: hidden;
 }
 
-/* Utilidad para cards genéricos */
 .card {
-  background-color: var(--color-bg-white);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  background: var(--bg-surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-default);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ==================== THEME TRANSITIONS ==================== */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease !important;
 }

@@ -1,4 +1,4 @@
-import type { User } from '../types';
+// import type { User } from '../types';
 import { request } from './apiClient';
 
 // These functions are lightweight stubs that can be replaced by real API calls.
@@ -18,7 +18,7 @@ export async function getUsersSyncStatus(token?: string): Promise<Array<{ userId
   }
 }
 
-export async function getGeoIncidents(projectId: string, token?: string): Promise<Array<{ id: string; lat: number; lon: number; severity: 'low'|'medium'|'high'|'critical'; type: string }>> {
+export async function getGeoIncidents(projectId: string, token?: string): Promise<Array<{ id: string; lat: number; lon: number; severity: 'low' | 'medium' | 'high' | 'critical'; type: string }>> {
   try {
     return await request(`/projects/${projectId}/geo-incidents`, { method: 'GET', token });
   } catch (e) {

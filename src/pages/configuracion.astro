@@ -1,0 +1,1789 @@
+---
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+---
+
+<DashboardLayout title="Configuración | STROP">
+    <div class="settings-page">
+        <div class="settings-header">
+            <h1>Configuración</h1>
+            <p>Administra las preferencias de tu cuenta y la aplicación</p>
+        </div>
+
+        <div class="settings-content">
+            <!-- Sidebar de navegación -->
+            <nav class="settings-nav">
+                <button class="nav-item active" data-section="cuenta">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                        ></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Cuenta
+                </button>
+                <button class="nav-item" data-section="notificaciones">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                        ></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    Notificaciones
+                </button>
+                <button class="nav-item" data-section="seguridad">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"
+                        ></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Seguridad
+                </button>
+                <button class="nav-item" data-section="apariencia">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
+                        ></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    Apariencia
+                </button>
+            </nav>
+
+            <!-- Contenido de la sección -->
+            <div class="settings-panel">
+                <!-- Toast para mensajes -->
+                <div class="toast" id="toast">
+                    <span class="toast-icon"></span>
+                    <span class="toast-message"></span>
+                </div>
+
+                <!-- Sección Cuenta -->
+                <section class="settings-section active" id="section-cuenta">
+                    <h2>Información de la Cuenta</h2>
+
+                    <form id="account-form">
+                        <div class="setting-group">
+                            <label class="setting-label">Nombre Completo</label>
+                            <input
+                                type="text"
+                                class="setting-input"
+                                id="account-name"
+                                name="full_name"
+                                required
+                            />
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label"
+                                >Correo Electrónico</label
+                            >
+                            <input
+                                type="email"
+                                class="setting-input disabled"
+                                id="account-email"
+                                disabled
+                            />
+                            <span class="field-hint"
+                                >El email no puede ser modificado</span
+                            >
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label">Teléfono</label>
+                            <input
+                                type="tel"
+                                class="setting-input"
+                                id="account-phone"
+                                name="phone"
+                                placeholder="+52 55 1234 5678"
+                            />
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label">Zona Horaria</label>
+                            <select
+                                class="setting-select"
+                                id="account-timezone"
+                                name="timezone"
+                            >
+                                <option value="America/Mexico_City"
+                                    >Ciudad de México (GMT-6)</option
+                                >
+                                <option value="America/Monterrey"
+                                    >Monterrey (GMT-6)</option
+                                >
+                                <option value="America/Tijuana"
+                                    >Tijuana (GMT-8)</option
+                                >
+                                <option value="America/Cancun"
+                                    >Cancún (GMT-5)</option
+                                >
+                            </select>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn-save"
+                            id="save-account"
+                        >
+                            <span class="btn-text">Guardar Cambios</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Sección Notificaciones -->
+                <section class="settings-section" id="section-notificaciones">
+                    <h2>Preferencias de Notificaciones</h2>
+
+                    <form id="notifications-form">
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Notificaciones por Email</span
+                                >
+                                <span class="toggle-desc"
+                                    >Recibe un resumen diario de actividad</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="email_notifications"
+                                    id="notif-email"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Incidencias Críticas</span
+                                >
+                                <span class="toggle-desc"
+                                    >Notificación inmediata cuando hay una
+                                    incidencia crítica</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="critical_notifications"
+                                    id="notif-critical"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Nuevas Asignaciones</span
+                                >
+                                <span class="toggle-desc"
+                                    >Cuando te asignan una incidencia o proyecto</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="assignment_notifications"
+                                    id="notif-assignments"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title">Comentarios</span>
+                                <span class="toggle-desc"
+                                    >Cuando alguien comenta en tus incidencias</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="comment_notifications"
+                                    id="notif-comments"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Sonido de Notificaciones</span
+                                >
+                                <span class="toggle-desc"
+                                    >Reproducir un sonido cuando llegue una
+                                    notificación</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="notification_sound"
+                                    id="notif-sound"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn-save"
+                            id="save-notifications"
+                        >
+                            <span class="btn-text">Guardar Preferencias</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Sección Seguridad -->
+                <section class="settings-section" id="section-seguridad">
+                    <h2>Seguridad de la Cuenta</h2>
+
+                    <form id="security-form">
+                        <div class="setting-group">
+                            <label class="setting-label"
+                                >Contraseña Actual</label
+                            >
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    class="setting-input"
+                                    id="current-password"
+                                    name="current_password"
+                                    placeholder="••••••••"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="current-password"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        class="eye-icon"
+                                    >
+                                        <path
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label">Nueva Contraseña</label
+                            >
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    class="setting-input"
+                                    id="new-password"
+                                    name="new_password"
+                                    placeholder="Mínimo 8 caracteres"
+                                    required
+                                    minlength="8"
+                                />
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="new-password"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        class="eye-icon"
+                                    >
+                                        <path
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div
+                                class="password-strength"
+                                id="password-strength"
+                            >
+                                <div class="strength-bar"></div>
+                                <span class="strength-text"></span>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label"
+                                >Confirmar Nueva Contraseña</label
+                            >
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    class="setting-input"
+                                    id="confirm-password"
+                                    name="confirm_password"
+                                    placeholder="Repite la nueva contraseña"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="confirm-password"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        class="eye-icon"
+                                    >
+                                        <path
+                                            d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                        ></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span
+                                class="field-hint password-match"
+                                id="password-match"></span>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn-save"
+                            id="save-security"
+                        >
+                            <span class="btn-text">Cambiar Contraseña</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+
+                    <div class="danger-zone">
+                        <h3>Zona de Peligro</h3>
+                        <p>
+                            Una vez que elimines tu cuenta, no hay vuelta atrás.
+                            Por favor, sé consciente.
+                        </p>
+                        <button class="btn-danger" id="delete-account-btn">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                                ></path>
+                            </svg>
+                            Eliminar Cuenta
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Sección Apariencia -->
+                <section class="settings-section" id="section-apariencia">
+                    <h2>Apariencia</h2>
+
+                    <form id="appearance-form">
+                        <div class="theme-selector">
+                            <label class="setting-label"
+                                >Tema de la Aplicación</label
+                            >
+                            <div class="theme-options">
+                                <button
+                                    type="button"
+                                    class="theme-option"
+                                    data-theme="light"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    >
+                                        <circle cx="12" cy="12" r="5"></circle>
+                                        <line x1="12" y1="1" x2="12" y2="3"
+                                        ></line>
+                                        <line x1="12" y1="21" x2="12" y2="23"
+                                        ></line>
+                                        <line
+                                            x1="4.22"
+                                            y1="4.22"
+                                            x2="5.64"
+                                            y2="5.64"></line>
+                                        <line
+                                            x1="18.36"
+                                            y1="18.36"
+                                            x2="19.78"
+                                            y2="19.78"></line>
+                                        <line x1="1" y1="12" x2="3" y2="12"
+                                        ></line>
+                                        <line x1="21" y1="12" x2="23" y2="12"
+                                        ></line>
+                                        <line
+                                            x1="4.22"
+                                            y1="19.78"
+                                            x2="5.64"
+                                            y2="18.36"></line>
+                                        <line
+                                            x1="18.36"
+                                            y1="5.64"
+                                            x2="19.78"
+                                            y2="4.22"></line>
+                                    </svg>
+                                    <span>Claro</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="theme-option"
+                                    data-theme="dark"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    >
+                                        <path
+                                            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                                        ></path>
+                                    </svg>
+                                    <span>Oscuro</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="theme-option"
+                                    data-theme="system"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    >
+                                        <rect
+                                            x="2"
+                                            y="3"
+                                            width="20"
+                                            height="14"
+                                            rx="2"
+                                            ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"
+                                        ></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"
+                                        ></line>
+                                    </svg>
+                                    <span>Sistema</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Animaciones Reducidas</span
+                                >
+                                <span class="toggle-desc"
+                                    >Reduce las animaciones para mejorar
+                                    rendimiento</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="reduced_motion"
+                                    id="reduced-motion"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title"
+                                    >Sidebar Compacto</span
+                                >
+                                <span class="toggle-desc"
+                                    >Mantener el sidebar colapsado por defecto</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="compact_sidebar"
+                                    id="compact-sidebar"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <span class="toggle-title">Modo Compacto</span>
+                                <span class="toggle-desc"
+                                    >Reduce el espaciado para ver más contenido</span
+                                >
+                            </div>
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    name="compact_mode"
+                                    id="compact-mode"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn-save"
+                            id="save-appearance"
+                        >
+                            <span class="btn-text">Guardar Preferencias</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar cuenta -->
+    <div class="modal-overlay" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-icon danger">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </div>
+            <h3>¿Eliminar tu cuenta?</h3>
+            <p>
+                Esta acción es permanente y no se puede deshacer. Todos tus
+                datos serán eliminados.
+            </p>
+            <div class="modal-input-group">
+                <label>Escribe "ELIMINAR" para confirmar:</label>
+                <input
+                    type="text"
+                    id="delete-confirm-input"
+                    placeholder="ELIMINAR"
+                />
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancel-delete"
+                    >Cancelar</button
+                >
+                <button class="btn-danger" id="confirm-delete" disabled
+                    >Eliminar Cuenta</button
+                >
+            </div>
+        </div>
+    </div>
+</DashboardLayout>
+
+<style>
+    .settings-page {
+        padding: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .settings-header {
+        margin-bottom: 2rem;
+    }
+
+    .settings-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .settings-header p {
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .settings-content {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 2rem;
+    }
+
+    .settings-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        background: transparent;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+    }
+
+    .nav-item:hover {
+        background: var(--bg-surface-hover);
+        color: var(--text-primary);
+    }
+
+    .nav-item.active {
+        background: var(--sidebar-item-active);
+        color: var(--accent-primary);
+    }
+
+    .nav-item.active svg {
+        color: var(--accent-primary);
+    }
+
+    .settings-panel {
+        background: var(--bg-surface);
+        border-radius: 16px;
+        padding: 2rem;
+        border: 1px solid var(--border-default);
+        position: relative;
+        transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    /* Toast Notification */
+    .toast {
+        position: fixed;
+        top: 80px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: var(--bg-surface);
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-default);
+        transform: translateX(120%);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+    }
+
+    .toast.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .toast.success {
+        border-color: var(--accent-success);
+    }
+
+    .toast.success .toast-icon::before {
+        content: "✓";
+        color: var(--accent-success);
+        font-weight: bold;
+    }
+
+    .toast.error {
+        border-color: var(--accent-danger);
+    }
+
+    .toast.error .toast-icon::before {
+        content: "✕";
+        color: var(--accent-danger);
+        font-weight: bold;
+    }
+
+    .toast-message {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .settings-section {
+        display: none;
+    }
+
+    .settings-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .settings-section h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0 0 1.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .setting-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .setting-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .setting-input,
+    .setting-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-default);
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-family: inherit;
+        transition: all 0.2s;
+        background: var(--bg-surface);
+        color: var(--text-primary);
+    }
+
+    .setting-input:focus,
+    .setting-select:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .setting-input.disabled {
+        background: var(--bg-surface-secondary);
+        color: var(--text-muted);
+        cursor: not-allowed;
+    }
+
+    .field-hint {
+        display: block;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-top: 0.375rem;
+    }
+
+    /* Password Input */
+    .password-input-wrapper {
+        position: relative;
+    }
+
+    .password-input-wrapper .setting-input {
+        padding-right: 3rem;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #94a3b8;
+        padding: 4px;
+        transition: color 0.2s;
+    }
+
+    .password-toggle:hover {
+        color: #475569;
+    }
+
+    /* Password Strength */
+    .password-strength {
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .strength-bar {
+        flex: 1;
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .strength-bar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        transition: all 0.3s;
+        border-radius: 2px;
+    }
+
+    .password-strength.weak .strength-bar::after {
+        width: 33%;
+        background: #ef4444;
+    }
+
+    .password-strength.medium .strength-bar::after {
+        width: 66%;
+        background: #f59e0b;
+    }
+
+    .password-strength.strong .strength-bar::after {
+        width: 100%;
+        background: #10b981;
+    }
+
+    .strength-text {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .password-strength.weak .strength-text {
+        color: #ef4444;
+    }
+
+    .password-strength.medium .strength-text {
+        color: #f59e0b;
+    }
+
+    .password-strength.strong .strength-text {
+        color: #10b981;
+    }
+
+    .password-match {
+        font-weight: 500;
+    }
+
+    .password-match.match {
+        color: #10b981;
+    }
+
+    .password-match.no-match {
+        color: var(--accent-danger);
+    }
+
+    /* Toggle Groups */
+    .toggle-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .toggle-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .toggle-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .toggle-desc {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .toggle-switch {
+        position: relative;
+        width: 48px;
+        height: 26px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border-default);
+        border-radius: 26px;
+        transition: all 0.3s;
+    }
+
+    .toggle-slider::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 3px;
+        bottom: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: all 0.3s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+        transform: translateX(22px);
+    }
+
+    /* Buttons */
+    .btn-save {
+        margin-top: 1.5rem;
+        padding: 0.875rem 1.5rem;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 180px;
+        justify-content: center;
+    }
+
+    .btn-save:hover:not(:disabled) {
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .btn-save:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .btn-save.loading .btn-text {
+        display: none;
+    }
+
+    .btn-save .btn-loader {
+        display: none;
+    }
+
+    .btn-save.loading .btn-loader {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Danger Zone */
+    .danger-zone {
+        margin-top: 3rem;
+        padding: 1.5rem;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+    }
+
+    .danger-zone h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #b91c1c;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .danger-zone p {
+        font-size: 0.875rem;
+        color: #7f1d1d;
+        margin: 0 0 1rem 0;
+    }
+
+    .btn-danger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        background: #dc2626;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-danger:hover {
+        background: #b91c1c;
+    }
+
+    .btn-secondary {
+        padding: 0.75rem 1.25rem;
+        background: var(--bg-surface);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-default);
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background: var(--bg-surface-hover);
+    }
+
+    /* Theme Selector */
+    .theme-selector {
+        margin-bottom: 1.5rem;
+    }
+
+    .theme-options {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.75rem;
+    }
+
+    .theme-option {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.25rem;
+        background: var(--bg-surface-secondary);
+        border: 2px solid var(--border-default);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--text-muted);
+    }
+
+    .theme-option:hover {
+        border-color: var(--text-muted);
+    }
+
+    .theme-option.active {
+        background: var(--sidebar-item-active);
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+    }
+
+    .theme-option span {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s;
+    }
+
+    .modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background: var(--bg-surface);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        transform: scale(0.9);
+        transition: transform 0.25s;
+    }
+
+    .modal-overlay.show .modal-content {
+        transform: scale(1);
+    }
+
+    .modal-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.25rem;
+    }
+
+    .modal-icon.danger {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .modal-content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .modal-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 0 0 1.5rem 0;
+    }
+
+    .modal-input-group {
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-input-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-input-group input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-default);
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-family: inherit;
+        background: var(--bg-surface);
+        color: var(--text-primary);
+    }
+
+    .modal-input-group input:focus {
+        outline: none;
+        border-color: #dc2626;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+
+    .modal-actions button {
+        flex: 1;
+    }
+
+    #confirm-delete:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+        .settings-content {
+            grid-template-columns: 1fr;
+        }
+
+        .settings-nav {
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            position: static;
+        }
+
+        .nav-item {
+            white-space: nowrap;
+        }
+
+        .theme-options {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    // ==================== SETTINGS STORAGE ====================
+    const STORAGE_KEY = "strop_settings";
+
+    interface Settings {
+        account: {
+            full_name: string;
+            email: string;
+            phone: string;
+            timezone: string;
+        };
+        notifications: {
+            email_notifications: boolean;
+            critical_notifications: boolean;
+            assignment_notifications: boolean;
+            comment_notifications: boolean;
+            notification_sound: boolean;
+        };
+        appearance: {
+            theme: "light" | "dark" | "system";
+            reduced_motion: boolean;
+            compact_sidebar: boolean;
+            compact_mode: boolean;
+        };
+    }
+
+    const defaultSettings: Settings = {
+        account: {
+            full_name: "Admin User",
+            email: "admin@strop.mx",
+            phone: "+52 55 1234 5678",
+            timezone: "America/Mexico_City",
+        },
+        notifications: {
+            email_notifications: true,
+            critical_notifications: true,
+            assignment_notifications: true,
+            comment_notifications: false,
+            notification_sound: true,
+        },
+        appearance: {
+            theme: "light",
+            reduced_motion: false,
+            compact_sidebar: false,
+            compact_mode: false,
+        },
+    };
+
+    function loadSettings(): Settings {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                return { ...defaultSettings, ...JSON.parse(stored) };
+            }
+        } catch (e) {
+            console.error("Error loading settings:", e);
+        }
+        return defaultSettings;
+    }
+
+    function saveSettings(settings: Settings): void {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+        } catch (e) {
+            console.error("Error saving settings:", e);
+        }
+    }
+
+    // ==================== TOAST NOTIFICATIONS ====================
+    function showToast(message: string, type: "success" | "error" = "success") {
+        const toast = document.getElementById("toast");
+        const toastMessage = toast?.querySelector(".toast-message");
+
+        if (toast && toastMessage) {
+            toastMessage.textContent = message;
+            toast.className = `toast ${type} show`;
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+    }
+
+    // ==================== NAVIGATION ====================
+    const navItems = document.querySelectorAll(".nav-item");
+    const sections = document.querySelectorAll(".settings-section");
+
+    navItems.forEach((item) => {
+        item.addEventListener("click", () => {
+            const sectionId = item.getAttribute("data-section");
+
+            navItems.forEach((nav) => nav.classList.remove("active"));
+            sections.forEach((sec) => sec.classList.remove("active"));
+
+            item.classList.add("active");
+            document
+                .getElementById(`section-${sectionId}`)
+                ?.classList.add("active");
+        });
+    });
+
+    // ==================== LOAD DATA INTO FORMS ====================
+    const settings = loadSettings();
+
+    // Account Form
+    (document.getElementById("account-name") as HTMLInputElement).value =
+        settings.account.full_name;
+    (document.getElementById("account-email") as HTMLInputElement).value =
+        settings.account.email;
+    (document.getElementById("account-phone") as HTMLInputElement).value =
+        settings.account.phone;
+    (document.getElementById("account-timezone") as HTMLSelectElement).value =
+        settings.account.timezone;
+
+    // Notifications Form
+    (document.getElementById("notif-email") as HTMLInputElement).checked =
+        settings.notifications.email_notifications;
+    (document.getElementById("notif-critical") as HTMLInputElement).checked =
+        settings.notifications.critical_notifications;
+    (document.getElementById("notif-assignments") as HTMLInputElement).checked =
+        settings.notifications.assignment_notifications;
+    (document.getElementById("notif-comments") as HTMLInputElement).checked =
+        settings.notifications.comment_notifications;
+    (document.getElementById("notif-sound") as HTMLInputElement).checked =
+        settings.notifications.notification_sound;
+
+    // Appearance
+    document.querySelectorAll(".theme-option").forEach((opt) => {
+        if (opt.getAttribute("data-theme") === settings.appearance.theme) {
+            opt.classList.add("active");
+        }
+    });
+    (document.getElementById("reduced-motion") as HTMLInputElement).checked =
+        settings.appearance.reduced_motion;
+    (document.getElementById("compact-sidebar") as HTMLInputElement).checked =
+        settings.appearance.compact_sidebar;
+    (document.getElementById("compact-mode") as HTMLInputElement).checked =
+        settings.appearance.compact_mode;
+
+    // ==================== ACCOUNT FORM ====================
+    document
+        .getElementById("account-form")
+        ?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById(
+                "save-account",
+            ) as HTMLButtonElement;
+            btn.classList.add("loading");
+            btn.disabled = true;
+
+            // Simulate API call
+            await new Promise((resolve) => setTimeout(resolve, 800));
+
+            settings.account.full_name = (
+                document.getElementById("account-name") as HTMLInputElement
+            ).value;
+            settings.account.phone = (
+                document.getElementById("account-phone") as HTMLInputElement
+            ).value;
+            settings.account.timezone = (
+                document.getElementById("account-timezone") as HTMLSelectElement
+            ).value;
+
+            saveSettings(settings);
+
+            btn.classList.remove("loading");
+            btn.disabled = false;
+            showToast("Información de cuenta actualizada");
+        });
+
+    // ==================== NOTIFICATIONS FORM ====================
+    document
+        .getElementById("notifications-form")
+        ?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById(
+                "save-notifications",
+            ) as HTMLButtonElement;
+            btn.classList.add("loading");
+            btn.disabled = true;
+
+            await new Promise((resolve) => setTimeout(resolve, 600));
+
+            settings.notifications.email_notifications = (
+                document.getElementById("notif-email") as HTMLInputElement
+            ).checked;
+            settings.notifications.critical_notifications = (
+                document.getElementById("notif-critical") as HTMLInputElement
+            ).checked;
+            settings.notifications.assignment_notifications = (
+                document.getElementById("notif-assignments") as HTMLInputElement
+            ).checked;
+            settings.notifications.comment_notifications = (
+                document.getElementById("notif-comments") as HTMLInputElement
+            ).checked;
+            settings.notifications.notification_sound = (
+                document.getElementById("notif-sound") as HTMLInputElement
+            ).checked;
+
+            saveSettings(settings);
+
+            btn.classList.remove("loading");
+            btn.disabled = false;
+            showToast("Preferencias de notificaciones guardadas");
+        });
+
+    // ==================== SECURITY FORM ====================
+    const newPassword = document.getElementById(
+        "new-password",
+    ) as HTMLInputElement;
+    const confirmPassword = document.getElementById(
+        "confirm-password",
+    ) as HTMLInputElement;
+    const strengthIndicator = document.getElementById("password-strength");
+    const matchIndicator = document.getElementById("password-match");
+
+    // Password strength checker
+    newPassword?.addEventListener("input", () => {
+        const value = newPassword.value;
+        let strength = 0;
+
+        if (value.length >= 8) strength++;
+        if (/[A-Z]/.test(value)) strength++;
+        if (/[0-9]/.test(value)) strength++;
+        if (/[^A-Za-z0-9]/.test(value)) strength++;
+
+        strengthIndicator?.classList.remove("weak", "medium", "strong");
+        const strengthText = strengthIndicator?.querySelector(".strength-text");
+
+        if (value.length === 0) {
+            if (strengthText) strengthText.textContent = "";
+        } else if (strength <= 1) {
+            strengthIndicator?.classList.add("weak");
+            if (strengthText) strengthText.textContent = "Débil";
+        } else if (strength <= 2) {
+            strengthIndicator?.classList.add("medium");
+            if (strengthText) strengthText.textContent = "Media";
+        } else {
+            strengthIndicator?.classList.add("strong");
+            if (strengthText) strengthText.textContent = "Fuerte";
+        }
+
+        checkPasswordMatch();
+    });
+
+    // Password match checker
+    function checkPasswordMatch() {
+        if (confirmPassword && matchIndicator) {
+            if (confirmPassword.value.length === 0) {
+                matchIndicator.textContent = "";
+                matchIndicator.className = "field-hint password-match";
+            } else if (newPassword.value === confirmPassword.value) {
+                matchIndicator.textContent = "✓ Las contraseñas coinciden";
+                matchIndicator.className = "field-hint password-match match";
+            } else {
+                matchIndicator.textContent = "✕ Las contraseñas no coinciden";
+                matchIndicator.className = "field-hint password-match no-match";
+            }
+        }
+    }
+
+    confirmPassword?.addEventListener("input", checkPasswordMatch);
+
+    // Password visibility toggle
+    document.querySelectorAll(".password-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const targetId = btn.getAttribute("data-target");
+            const input = document.getElementById(
+                targetId!,
+            ) as HTMLInputElement;
+
+            if (input.type === "password") {
+                input.type = "text";
+                btn.classList.add("visible");
+            } else {
+                input.type = "password";
+                btn.classList.remove("visible");
+            }
+        });
+    });
+
+    // Security form submit
+    document
+        .getElementById("security-form")
+        ?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const currentPwd = (
+                document.getElementById("current-password") as HTMLInputElement
+            ).value;
+            const newPwd = newPassword.value;
+            const confirmPwd = confirmPassword.value;
+
+            if (newPwd !== confirmPwd) {
+                showToast("Las contraseñas no coinciden", "error");
+                return;
+            }
+
+            if (newPwd.length < 8) {
+                showToast(
+                    "La contraseña debe tener al menos 8 caracteres",
+                    "error",
+                );
+                return;
+            }
+
+            const btn = document.getElementById(
+                "save-security",
+            ) as HTMLButtonElement;
+            btn.classList.add("loading");
+            btn.disabled = true;
+
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            // In production, this would validate current password and update via API
+            console.log("Password change requested");
+
+            btn.classList.remove("loading");
+            btn.disabled = false;
+
+            // Clear form
+            (
+                document.getElementById("current-password") as HTMLInputElement
+            ).value = "";
+            newPassword.value = "";
+            confirmPassword.value = "";
+            strengthIndicator?.classList.remove("weak", "medium", "strong");
+            if (matchIndicator) matchIndicator.textContent = "";
+
+            showToast("Contraseña actualizada correctamente");
+        });
+
+    // ==================== APPEARANCE ====================
+    // Helper function to apply theme
+    function applyTheme(theme: "light" | "dark" | "system") {
+        let effectiveTheme = theme;
+
+        if (theme === "system") {
+            effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
+                ? "dark"
+                : "light";
+        }
+
+        // Add transition class for smooth change
+        document.documentElement.classList.add("theme-transition");
+        document.documentElement.setAttribute("data-theme", effectiveTheme);
+
+        // Remove transition class after animation
+        setTimeout(() => {
+            document.documentElement.classList.remove("theme-transition");
+        }, 300);
+    }
+
+    // Theme selector - apply immediately on click
+    document.querySelectorAll(".theme-option").forEach((option) => {
+        option.addEventListener("click", () => {
+            document
+                .querySelectorAll(".theme-option")
+                .forEach((opt) => opt.classList.remove("active"));
+            option.classList.add("active");
+
+            const selectedTheme = option.getAttribute("data-theme") as
+                | "light"
+                | "dark"
+                | "system";
+            settings.appearance.theme = selectedTheme;
+
+            // Apply theme immediately
+            applyTheme(selectedTheme);
+        });
+    });
+
+    // Listen for system theme changes when 'system' is selected
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+            if (settings.appearance.theme === "system") {
+                applyTheme("system");
+            }
+        });
+
+    document
+        .getElementById("appearance-form")
+        ?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById(
+                "save-appearance",
+            ) as HTMLButtonElement;
+            btn.classList.add("loading");
+            btn.disabled = true;
+
+            await new Promise((resolve) => setTimeout(resolve, 600));
+
+            settings.appearance.reduced_motion = (
+                document.getElementById("reduced-motion") as HTMLInputElement
+            ).checked;
+            settings.appearance.compact_sidebar = (
+                document.getElementById("compact-sidebar") as HTMLInputElement
+            ).checked;
+            settings.appearance.compact_mode = (
+                document.getElementById("compact-mode") as HTMLInputElement
+            ).checked;
+
+            // Apply compact sidebar setting
+            if (settings.appearance.compact_sidebar) {
+                localStorage.setItem("sidebar-collapsed", "true");
+            } else {
+                localStorage.setItem("sidebar-collapsed", "false");
+            }
+
+            // Apply reduced motion setting
+            if (settings.appearance.reduced_motion) {
+                document.documentElement.style.setProperty(
+                    "--animation-duration",
+                    "0s",
+                );
+            } else {
+                document.documentElement.style.removeProperty(
+                    "--animation-duration",
+                );
+            }
+
+            saveSettings(settings);
+
+            btn.classList.remove("loading");
+            btn.disabled = false;
+            showToast("Preferencias de apariencia guardadas");
+        });
+
+    // ==================== DELETE ACCOUNT MODAL ====================
+    const deleteModal = document.getElementById("delete-modal");
+    const deleteInput = document.getElementById(
+        "delete-confirm-input",
+    ) as HTMLInputElement;
+    const confirmDeleteBtn = document.getElementById(
+        "confirm-delete",
+    ) as HTMLButtonElement;
+
+    document
+        .getElementById("delete-account-btn")
+        ?.addEventListener("click", () => {
+            deleteModal?.classList.add("show");
+            deleteInput.value = "";
+            confirmDeleteBtn.disabled = true;
+        });
+
+    document.getElementById("cancel-delete")?.addEventListener("click", () => {
+        deleteModal?.classList.remove("show");
+    });
+
+    deleteModal?.addEventListener("click", (e) => {
+        if (e.target === deleteModal) {
+            deleteModal.classList.remove("show");
+        }
+    });
+
+    deleteInput?.addEventListener("input", () => {
+        confirmDeleteBtn.disabled = deleteInput.value !== "ELIMINAR";
+    });
+
+    confirmDeleteBtn?.addEventListener("click", async () => {
+        if (deleteInput.value === "ELIMINAR") {
+            confirmDeleteBtn.textContent = "Eliminando...";
+            confirmDeleteBtn.disabled = true;
+
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
+            // Clear all data
+            localStorage.clear();
+            document.cookie = "sb-access-token=; path=/; max-age=0";
+            document.cookie = "sb-refresh-token=; path=/; max-age=0";
+
+            window.location.href = "/login";
+        }
+    });
+</script>

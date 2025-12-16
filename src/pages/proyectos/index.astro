@@ -1,0 +1,26 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import ProjectsView from "../../components/projects/ProjectsView";
+import "../../styles/projects.css";
+import "../../styles/modal.css";
+import "../../styles/forms.css";
+---
+
+<DashboardLayout title="Proyectos | STROP Admin">
+    <div class="projects-page-wrapper" style="padding: 1rem 0;">
+        <div class="projects-header">
+            <div class="header-title-group">
+                <h1>Cartera de Proyectos</h1>
+                <p class="header-subtitle">
+                    Gestiona y monitorea el progreso de todas las obras activas.
+                </p>
+            </div>
+            <!-- Stats Summary opcional arriba a la derecha -->
+            <div class="flex gap-4">
+                <!-- Podríamos agregar quick stats aquí en el futuro -->
+            </div>
+        </div>
+
+        <ProjectsView client:load />
+    </div>
+</DashboardLayout>

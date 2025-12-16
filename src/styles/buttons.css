@@ -1,0 +1,585 @@
+/* src/styles/buttons.css - Sistema de Botones Premium con Animaciones */
+
+/* ========================================
+   VARIABLES DE BOTONES
+   ======================================== */
+:root {
+    --btn-primary-bg: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    --btn-primary-hover: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+    --btn-primary-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    --btn-primary-shadow-hover: 0 6px 20px rgba(37, 99, 235, 0.45);
+
+    --btn-secondary-bg: linear-gradient(135deg, #475569 0%, #334155 100%);
+    --btn-secondary-hover: linear-gradient(135deg, #334155 0%, #1E293B 100%);
+
+    --btn-success-bg: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    --btn-success-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+
+    --btn-danger-bg: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    --btn-danger-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+
+    --btn-warning-bg: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    --btn-warning-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+
+    /* Transiciones */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ========================================
+   BASE BUTTON STYLES
+   ======================================== */
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover::before {
+    left: -100%;
+}
+
+/* Icono dentro del botón */
+.btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover svg {
+    transform: translateX(2px);
+}
+
+/* ========================================
+   BUTTON VARIANTS
+   ======================================== */
+
+/* Primary Button */
+.btn-primary {
+    background: var(--btn-primary-bg);
+    color: white;
+    box-shadow: var(--btn-primary-shadow);
+}
+
+.btn-primary:hover {
+    background: var(--btn-primary-hover);
+    box-shadow: var(--btn-primary-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: var(--btn-secondary-bg);
+    color: white;
+    box-shadow: 0 4px 14px rgba(71, 85, 105, 0.25);
+}
+
+.btn-secondary:hover {
+    background: var(--btn-secondary-hover);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Ghost/Outline Button */
+.btn-ghost {
+    background: transparent;
+    color: #64748B;
+    border: 2px solid #E2E8F0;
+}
+
+.btn-ghost:hover {
+    background: rgba(37, 99, 235, 0.05);
+    border-color: #2563EB;
+    color: #2563EB;
+    transform: translateY(-1px);
+}
+
+.btn-ghost::before {
+    display: none;
+}
+
+/* Success Button */
+.btn-success {
+    background: var(--btn-success-bg);
+    color: white;
+    box-shadow: var(--btn-success-shadow);
+}
+
+.btn-success:hover {
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: var(--btn-danger-bg);
+    color: white;
+    box-shadow: var(--btn-danger-shadow);
+}
+
+.btn-danger:hover {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Warning Button */
+.btn-warning {
+    background: var(--btn-warning-bg);
+    color: white;
+    box-shadow: var(--btn-warning-shadow);
+}
+
+.btn-warning:hover {
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Glass Button */
+.btn-glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   BUTTON SIZES
+   ======================================== */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    border-radius: 8px;
+}
+
+.btn-sm svg {
+    width: 14px;
+    height: 14px;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 14px;
+}
+
+.btn-lg svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Icon Only Button */
+.btn-icon {
+    padding: 0.75rem;
+    border-radius: 12px;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.btn-icon.btn-sm {
+    padding: 0.5rem;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 10px;
+}
+
+.btn-icon:hover svg {
+    transform: scale(1.1);
+}
+
+/* ========================================
+   TOGGLE BUTTON GROUP (Para Mapa/Lista)
+   ======================================== */
+.btn-toggle-group {
+    display: inline-flex;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748B;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.btn-toggle:hover:not(.active) {
+    color: #1E293B;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-toggle.active {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+    color: #1E293B;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.btn-toggle.active svg {
+    color: #2563EB;
+}
+
+/* Efecto ripple en toggle */
+.btn-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.btn-toggle:active::after {
+    width: 150px;
+    height: 150px;
+}
+
+/* ========================================
+   ACTION BUTTON (Para Actualizar, etc)
+   ======================================== */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    color: #2563EB;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-action svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.btn-action:hover {
+    background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.btn-action:hover svg {
+    transform: rotate(180deg);
+}
+
+.btn-action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ========================================
+   CLOSE BUTTON (Para modales)
+   ======================================== */
+.btn-close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    border: none;
+    border-radius: 10px;
+    color: #64748B;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-close svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn-close:hover {
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+    color: #DC2626;
+}
+
+.btn-close:hover svg {
+    transform: rotate(90deg);
+}
+
+.btn-close:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   LINK BUTTON (Para Ver más, etc)
+   ======================================== */
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    color: #2563EB;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.btn-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    background: linear-gradient(90deg, #2563EB, transparent);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.btn-link:hover::after {
+    transform: scaleX(1);
+}
+
+.btn-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.btn-link:hover {
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.btn-link:hover svg {
+    transform: translateX(4px);
+}
+
+/* ========================================
+   FAB - Floating Action Button
+   ======================================== */
+.btn-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--btn-primary-bg);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    transition: var(--transition-bounce);
+    z-index: 100;
+}
+
+.btn-fab svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.btn-fab:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.5);
+}
+
+.btn-fab:hover svg {
+    transform: rotate(90deg);
+}
+
+.btn-fab:active {
+    transform: translateY(-2px) scale(1);
+}
+
+/* ========================================
+   CHIP BUTTON (Para Tags interactivos)
+   ======================================== */
+.btn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-chip:hover {
+    background: #E2E8F0;
+    border-color: #CBD5E1;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-chip.active {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border-color: #93C5FD;
+    color: #2563EB;
+}
+
+.btn-chip svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+.btn.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.btn-ghost.loading::after,
+.btn-action.loading::after {
+    border-color: rgba(37, 99, 235, 0.3);
+    border-top-color: #2563EB;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   PULSE EFFECT (Para alertas)
+   ======================================== */
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+}
+
+.btn-danger.btn-pulse {
+    animation-name: pulse-danger;
+}
+
+@keyframes pulse-danger {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
